@@ -1,0 +1,18 @@
+# Versionning
+.git
+.gitignore
+.dockerignore
+
+# Build dependencies
+node_modules
+dist
+
+# Env
+.env
+.env.local
+
+# Misc
+.eslintrc.js
+.prettierrc
+README.md
+LICENSE.md

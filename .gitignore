@@ -1,0 +1,10 @@
+**/node_modules
+**/.DS_Store
+**/.vscode
+**/.idea
+.env
+**/.env.local
+**/db
+**/pgadmin_data
+**/coverage
+**/dist
