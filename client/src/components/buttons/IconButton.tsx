@@ -8,7 +8,9 @@ type IconButtonProps = {
 export function IconButton({ name, icon }: IconButtonProps) {
   return (
     <button
-      className={'aspect-square bg-light p-2 flex rounded-lg hover:bg-primary'}
+      className={
+        'aspect-square bg-light p-2 flex rounded-lg hover:bg-primary shadow-md'
+      }
       aria-label={name}
     >
       <span className={'w-5 aspect-square'}>{icon}</span>
