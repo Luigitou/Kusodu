@@ -1,18 +1,19 @@
-import {Sidebar} from "./components";
+import { Header, Sidebar } from './layout';
 
 function App() {
-
   return (
     <>
-      <div className={"flex h-dvh w-dvw bg-dark text-white"}>
-        <div className={"p-4"}><Sidebar/></div>
-        <div className={"flex flex-col h-dvh w-dvw p-2 gap-2"}>
-          <div className={"p-2"}>Header</div>
-          <div className={"bg-background grow rounded-2xl p-4"}>Content</div>
+      <div className={'flex h-dvh w-dvw bg-dark text-white font-sans'}>
+        <Sidebar />
+        <div className={'flex flex-col h-dvh w-full'}>
+          <Header />
+          <div className={'bg-background grow rounded-2xl p-4 m-2'}>
+            Content
+          </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
