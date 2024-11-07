@@ -5,6 +5,7 @@
 # Build files
 build
 dist
+.next
 
 # Node modules
 node_modules

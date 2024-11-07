@@ -6,6 +6,6 @@ export class GridController {
 
   @Get(':id')
   getGrid() {
-    return 'Hello World!';
+    return 'Hello World from grid !';
   }
 }

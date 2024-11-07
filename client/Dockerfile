@@ -4,24 +4,20 @@ WORKDIR /app
 
 COPY package*.json ./
 
+RUN npm install
+
 COPY . .
 
 FROM builder AS development
 
-RUN npm install
+EXPOSE 3000
 
-EXPOSE 5000
-
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "dev"]
 
 FROM builder AS production
 
-RUN npm i -g @nestjs/cli
-
-RUN npm ci --omit=dev
-
 RUN npm run build
 
-EXPOSE 5000
+EXPOSE 3000
 
-CMD ["node", "dist/main"]
+CMD ["npm", "run", "start"]
