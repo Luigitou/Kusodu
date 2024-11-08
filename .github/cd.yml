@@ -1,0 +1,37 @@
+name: Lightsail Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Config SSH agent
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+
+      # Add Lightsail SSH key to known_hosts
+      - name: Add Lightsail SSH key to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.LIGHTSAIL_IP }} >> ~/.ssh/known_hosts
+
+      # Pull code from repository
+      - name: Pull code from repository & launch containers
+        run: |
+          ssh ${{ secrets.LIGHTSAIL_USERNAME }}@${{ secrets.LIGHTSAIL_IP }} << 'EOF'
+          cd /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu
+          git pull origin main
+          docker-compose down
+          docker-compose up -d --build
+          EOF
