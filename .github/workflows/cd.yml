@@ -31,10 +31,18 @@ jobs:
         run: |
           rsync -avz --delete --exclude='.git*' --exclude='node_modules' ./ ${{ secrets.LIGHTSAIL_USERNAME }}@${{ secrets.LIGHTSAIL_IP }}:/home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu
 
+      # Create .env files
+      - name: Déployer les variables d'environnement
+        run: |
+          ssh -T ${{ secrets.LIGHTSAIL_USER }}@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
+            echo "${{ secrets.CLIENT_ENV }}" > /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu/client/.env
+            echo "${{ secrets.API_ENV }}" > /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu/api/.env
+          EOF
+
       # Start containers
       - name: Start containers
         run: |
-          ssh ${{ secrets.LIGHTSAIL_USERNAME }}@${{ secrets.LIGHTSAIL_IP }} << 'EOF'
+          ssh -T ${{ secrets.LIGHTSAIL_USERNAME }}@${{ secrets.LIGHTSAIL_IP }} << 'EOF'
           cd /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu
           docker-compose down
           docker-compose up -d --build
