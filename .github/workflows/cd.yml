@@ -34,7 +34,7 @@ jobs:
       # Create .env files
       - name: Déployer les variables d'environnement
         run: |
-          ssh -T ${{ secrets.LIGHTSAIL_USER }}@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
+          ssh -T ${{ secrets.LIGHTSAIL_USERNAME }}@${{ secrets.LIGHTSAIL_IP }} << 'EOF'
             echo "${{ secrets.CLIENT_ENV }}" > /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu/client/.env
             echo "${{ secrets.API_ENV }}" > /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu/api/.env
           EOF
