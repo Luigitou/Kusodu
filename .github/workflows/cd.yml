@@ -26,12 +26,17 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.LIGHTSAIL_IP }} >> ~/.ssh/known_hosts
 
-      # Pull code from repository
-      - name: Pull code from repository & launch containers
+      # Push code to the server
+      - name: Push code to the server
+        run: |
+          rsync -avz --delete --exclude='.git*' --exclude='node_modules' ./ ${{ secrets.LIGHTSAIL_USERNAME }}@${{ secrets.LIGHTSAIL_IP }}:/home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu
+
+      # Start containers
+      - name: Start containers
         run: |
           ssh ${{ secrets.LIGHTSAIL_USERNAME }}@${{ secrets.LIGHTSAIL_IP }} << 'EOF'
           cd /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu
-          git pull origin main
           docker-compose down
           docker-compose up -d --build
+          docker ps
           EOF
