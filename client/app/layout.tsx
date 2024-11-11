@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Header, Sidebar } from '@/app/components';
+import { Header, Sidebar } from '@/ui';
 
 export const metadata: Metadata = {
   title: 'Kusodu',
@@ -19,10 +19,10 @@ export default function RootLayout({
           <Header />
         </header>
         <div className={'flex grow '}>
-          <aside className={'m-4 mt-2'}>
+          <aside className={'m-4 mt-2 mr-2'}>
             <Sidebar />
           </aside>
-          <main className={'bg-background grow rounded-xl m-4 mt-2 p-4'}>
+          <main className={'bg-background grow rounded-xl m-4 ml-2 mt-2 p-4'}>
             {children}
           </main>
         </div>
