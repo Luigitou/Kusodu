@@ -1,16 +1,20 @@
-import { NavButtons } from '@/components';
+import { DesktopSidebar } from '@/ui/Sidebar/Desktop';
+import { MobileSidebar } from '@/ui/Sidebar/Mobile';
 import { AiGameIcon, ChampionIcon, ZapIcon } from '@/icons';
 
-export function Sidebar() {
-  return (
-    <nav
-      className={
-        'flex h-full w-full flex-col items-center justify-center gap-6'
-      }
-    >
-      <NavButtons label={'Jouer'} href={'/'} icon={<AiGameIcon />} />
-      <NavButtons label={'Duel'} href={'/'} icon={<ZapIcon />} />
-      <NavButtons label={'Classé'} href={'/'} icon={<ChampionIcon />} />
-    </nav>
-  );
+type SidebarProps = {
+  isMobile: boolean;
+};
+
+const buttons = [
+  { label: 'Jouer', href: '/', icon: <AiGameIcon /> },
+  { label: 'Duel', href: '/duel', icon: <ZapIcon /> },
+  { label: 'Classé', href: '/:id', icon: <ChampionIcon /> },
+];
+
+export function Sidebar({ isMobile }: SidebarProps) {
+  if (isMobile) {
+    return <MobileSidebar />;
+  }
+  return <DesktopSidebar buttons={buttons} />;
 }
