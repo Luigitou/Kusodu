@@ -2,6 +2,7 @@
 
 import classNames from 'classnames';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 type HeaderButtonsProps = {
   label: string;
@@ -16,12 +17,20 @@ export function HeaderButtons({
   click,
   href,
 }: HeaderButtonsProps) {
+  const currentPath = usePathname();
+
   return (
     <div
       className={classNames(
-        'flex h-full w-full items-center justify-center rounded-lg border-2 border-transparent bg-light hover:border-primary',
+        'relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg border-2 border-transparent bg-light hover:border-primary',
       )}
     >
+      <span
+        className={classNames(
+          'absolute bottom-0 left-0 h-1 w-full bg-primary',
+          href && currentPath !== href && 'hidden',
+        )}
+      ></span>
       {!href && (
         <button
           className={'h-full w-full p-2'}
