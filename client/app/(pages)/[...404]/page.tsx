@@ -21,7 +21,8 @@ export default function NotFound() {
         </tbody>
       </table>
       <span className={'text-center text-xl'}>
-        Oups, il semblerait que vous cherchiez quelque chose qui n'existe pas.
+        Oups, il semblerait que vous cherchiez quelque chose qui n&apos;existe
+        pas.
       </span>
     </div>
   );
