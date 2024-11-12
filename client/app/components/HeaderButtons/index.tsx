@@ -29,6 +29,7 @@ export function HeaderButtons({
         className={classNames(
           'absolute bottom-0 left-0 h-1 w-full bg-primary',
           href && currentPath !== href && 'hidden',
+          !href && 'hidden',
         )}
       ></span>
       {!href && (
