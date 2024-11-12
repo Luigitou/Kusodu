@@ -41,7 +41,7 @@ export function MobileSidebar({ buttons, close }: MobileSidebarProps) {
         <span className={'h-[2px] w-full rounded-full bg-primary'}></span>
         <NavButtons
           label={'Se connecter'}
-          href={'/login'}
+          href={'/auth'}
           icon={<UserIcon />}
           className={'justify-center'}
           click={close}

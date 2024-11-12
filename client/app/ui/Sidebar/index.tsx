@@ -1,6 +1,6 @@
 import { DesktopSidebar } from '@/ui/Sidebar/Desktop';
 import { MobileSidebar } from '@/ui/Sidebar/Mobile';
-import { AiGameIcon, ChampionIcon, ZapIcon } from '@/icons';
+import { AiGameIcon, ChampionIcon, Home09Icon, ZapIcon } from '@/icons';
 
 type SidebarProps = {
   isMobile: boolean;
@@ -8,7 +8,8 @@ type SidebarProps = {
 };
 
 const buttons = [
-  { label: 'Jouer', href: '/', icon: <AiGameIcon /> },
+  { label: 'Accueil', href: '/', icon: <Home09Icon /> },
+  { label: 'Jouer', href: '/game', icon: <AiGameIcon /> },
   { label: 'Duel', href: '/duel', icon: <ZapIcon /> },
   { label: 'Classé', href: '/:id', icon: <ChampionIcon /> },
 ];

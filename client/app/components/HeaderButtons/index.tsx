@@ -19,15 +19,23 @@ export function HeaderButtons({
   return (
     <div
       className={classNames(
-        'flex items-center justify-center rounded-lg border-2 border-transparent bg-light p-2 hover:border-primary',
+        'flex h-full w-full items-center justify-center rounded-lg border-2 border-transparent bg-light hover:border-primary',
       )}
     >
       {!href && (
-        <button onClick={click} aria-label={label}>
+        <button
+          className={'h-full w-full p-2'}
+          onClick={click}
+          aria-label={label}
+        >
           {icon}
         </button>
       )}
-      {href && <Link href={href}>{icon}</Link>}
+      {href && (
+        <Link href={href} className={'p-2'}>
+          {icon}
+        </Link>
+      )}
     </div>
   );
 }

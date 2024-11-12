@@ -22,7 +22,11 @@ export default function RootLayout({
           <aside className={'m-4 mr-2 mt-2 hidden md:block'}>
             <Sidebar isMobile={false} />
           </aside>
-          <main className={'m-4 ml-2 mt-2 grow rounded-xl bg-background p-4'}>
+          <main
+            className={
+              'm-4 ml-2 mt-2 flex grow items-center justify-center rounded-xl bg-background p-4'
+            }
+          >
             {children}
           </main>
         </div>

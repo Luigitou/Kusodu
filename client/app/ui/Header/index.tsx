@@ -12,7 +12,7 @@ export function Header() {
     <div className={'flex items-center justify-between'}>
       <h1 className={'text-3xl md:px-8'}>Kusodu.</h1>
       <div className={'hidden md:block'}>
-        <HeaderButtons label={'Profile'} icon={<UserIcon />} href={'/login'} />
+        <HeaderButtons label={'Profile'} icon={<UserIcon />} href={'/auth'} />
       </div>
       <div className={'block md:hidden'}>
         <HeaderButtons
