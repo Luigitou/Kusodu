@@ -4,6 +4,7 @@ import { AiGameIcon, ChampionIcon, ZapIcon } from '@/icons';
 
 type SidebarProps = {
   isMobile: boolean;
+  close?: () => void;
 };
 
 const buttons = [
@@ -12,9 +13,9 @@ const buttons = [
   { label: 'Classé', href: '/:id', icon: <ChampionIcon /> },
 ];
 
-export function Sidebar({ isMobile }: SidebarProps) {
+export function Sidebar({ isMobile, close }: SidebarProps) {
   if (isMobile) {
-    return <MobileSidebar />;
+    return <MobileSidebar buttons={buttons} close={close} />;
   }
   return <DesktopSidebar buttons={buttons} />;
 }
