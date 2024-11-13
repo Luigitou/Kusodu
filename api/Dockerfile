@@ -8,7 +8,7 @@ COPY . .
 
 FROM builder AS development
 
-RUN npm install
+RUN npm ci
 
 EXPOSE 5000
 
