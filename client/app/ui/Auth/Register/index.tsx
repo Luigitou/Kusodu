@@ -145,7 +145,7 @@ export function Register() {
           }
           type='submit'
         >
-          Submit
+          {isSubmitting ? 'Submit' : 'Processing'}
         </button>
       </form>
     </div>
