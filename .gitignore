@@ -9,3 +9,9 @@ dist
 
 # Node modules
 node_modules
+
+# Env files
+.env
+
+# Database files
+db
