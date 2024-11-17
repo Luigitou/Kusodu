@@ -5,7 +5,9 @@ import { PrismaService } from '@app/prisma';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getAllUsers() {
-    return this.prismaService.user.findMany();
+  async getOneUserFromEmail(email: string) {
+    return this.prismaService.user.findUnique({
+      where: { email },
+    });
   }
 }
