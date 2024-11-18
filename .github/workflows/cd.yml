@@ -37,6 +37,7 @@ jobs:
           ssh -T ${{ secrets.LIGHTSAIL_USERNAME }}@${{ secrets.LIGHTSAIL_IP }} << 'EOF'
             echo "${{ secrets.CLIENT_ENV }}" > /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu/client/.env
             echo "${{ secrets.API_ENV }}" > /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu/api/.env
+            echo "${{ secrets.INFRA_ENV }}" > /home/${{ secrets.LIGHTSAIL_USERNAME }}/Kusodu/.env
           EOF
 
       # Start containers
