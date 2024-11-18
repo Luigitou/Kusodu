@@ -10,4 +10,22 @@ export class UserService {
       where: { email },
     });
   }
+
+  async createUser({
+    username,
+    email,
+    passwordHash,
+  }: {
+    username: string;
+    email: string;
+    passwordHash: string;
+  }) {
+    return this.prismaService.user.create({
+      data: {
+        username,
+        email,
+        passwordHash,
+      },
+    });
+  }
 }
