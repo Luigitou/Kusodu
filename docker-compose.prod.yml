@@ -13,6 +13,8 @@ services:
     env_file:
       - ./api/.env
     restart: always
+    depends_on:
+      - postgres
     networks:
       - kusodu
 
@@ -29,9 +31,26 @@ services:
     env_file:
       - ./client/.env
     restart: always
+    depends_on:
+      - api
+    networks:
+      - kusodu
+
+  postgres:
+    image: postgres:17.1-bullseye
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - kusodu
 
 networks:
   kusodu:
     driver: bridge
+
+volumes:
+  postgres_data:
