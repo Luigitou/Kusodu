@@ -1,3 +1,5 @@
+'use client';
+
 import { Register } from '@/ui';
 
 export default function Auth() {
