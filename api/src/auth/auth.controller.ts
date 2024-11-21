@@ -46,7 +46,9 @@ export class AuthController {
       email: createdUser.email,
     });
 
-    return { createdUser, token };
+    const cleanedUser = { ...createdUser, passwordHash: undefined };
+
+    return { cleanedUser, token };
   }
 
   @Post('login')

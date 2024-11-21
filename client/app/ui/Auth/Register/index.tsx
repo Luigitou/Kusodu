@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 import { registerService } from '@/services';
 import { toast } from 'react-toastify';
+import { useStore } from '@/store';
 
 interface IRegisterFormInput {
   username: string;
@@ -36,6 +37,9 @@ const fieldClasses = {
 };
 
 export function Register() {
+  const setUser = useStore(state => state.setUser);
+  const setToken = useStore(state => state.setToken);
+
   const {
     register,
     handleSubmit,
@@ -49,7 +53,13 @@ export function Register() {
 
   const onSubmit = async (data: IRegisterFormInput) => {
     try {
-      registerService(data.username, data.email, data.password);
+      const response = await registerService(
+        data.username,
+        data.email,
+        data.password,
+      );
+      setUser(response.cleanedUser);
+      setToken(response.token);
     } catch (error) {
       console.error('Register error:', error);
       toast('Une erreur est survenue, veuillez réessayer plus tard');
