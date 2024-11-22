@@ -1,5 +1,5 @@
 import { api } from '@/services';
-import { RegisterDto } from '@/services/auth/dto';
+import { LoginDto, RegisterDto } from '@/services/auth/dto';
 
 export async function registerService(
   username: string,
@@ -15,7 +15,7 @@ export async function registerService(
 }
 
 export async function loginService(email: string, password: string) {
-  const response = await api.post('/auth/login', {
+  const response = await api.post<LoginDto>('/auth/login', {
     email,
     password,
   });

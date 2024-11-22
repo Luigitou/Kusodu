@@ -23,6 +23,13 @@ const schema = yup.object().shape({
     .required('Password is required'),
 });
 
+const fieldClasses = {
+  wrapper: 'flex flex-col gap-2 w-full w-64 md:w-72',
+  label: 'pl-1 text-sm opacity-75 text-white w-full',
+  input:
+    'px-4 py-2 rounded-lg bg-background text-white shadow-lg w-full outline-none focus:ring-2 focus:ring-primary',
+};
+
 export function Login({ switchToRegister }: LoginProps) {
   const setUser = useStore(state => state.setUser);
   const setToken = useStore(state => state.setToken);
@@ -51,35 +58,57 @@ export function Login({ switchToRegister }: LoginProps) {
   };
 
   return (
-    <div>
-      <h2>Connexion</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor={'email'}>Email</label>
+    <div className={'flex w-full flex-col gap-8'}>
+      <h2 className={'flex items-center justify-center text-xl'}>Connexion</h2>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={'flex flex-col items-center justify-center gap-8 text-black'}
+      >
+        <div className={fieldClasses.wrapper}>
+          <label htmlFor={'email'} className={fieldClasses.label}>
+            Email
+          </label>
           <input
             type={'email'}
             id={'email'}
             {...register('email')}
             placeholder={'Email'}
             onChange={() => handleFocus('email')}
+            className={fieldClasses.input}
           />
         </div>
-        <div>
-          <label htmlFor={'password'}>Mot de passe</label>
+        <div className={fieldClasses.wrapper}>
+          <label htmlFor={'password'} className={fieldClasses.label}>
+            Mot de passe
+          </label>
           <input
             type={'password'}
             id={'password'}
             {...register('password')}
             placeholder={'Password'}
             onChange={() => handleFocus('password')}
+            className={fieldClasses.input}
           />
         </div>
-        <button type='submit'>
+        <button
+          type='submit'
+          className={
+            'mt-2 w-fit rounded-lg border-2 border-transparent bg-light px-8 py-2 text-center text-white shadow-xl hover:border-primary'
+          }
+        >
           {isSubmitting ? 'Connecting' : 'Connexion'}
         </button>
       </form>
-      <span className={'h-2 w-full rounded-full bg-primary'}></span>
-      <button onClick={switchToRegister}>Créer un compte</button>
+      <span className={'h-[2px] w-full rounded-full bg-primary'}></span>
+      <div className={'flex items-center justify-center gap-2 text-sm'}>
+        <span>Pas encore de compte ?</span>
+        <button
+          onClick={switchToRegister}
+          className={'text-primary hover:underline'}
+        >
+          Créer un compte
+        </button>
+      </div>
     </div>
   );
 }

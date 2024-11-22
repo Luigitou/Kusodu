@@ -33,10 +33,10 @@ const schema = yup.object().shape({
 
 const fieldClasses = {
   groups: 'mb-8 flex flex-col gap-8 lg:flex-row lg:gap-12',
-  wrapper: 'flex flex-col gap-3 w-full w-64 md:w-72',
-  label: 'text-sm opacity-75 text-white text-center w-full',
+  wrapper: 'flex flex-col gap-2 w-full w-64 md:w-72',
+  label: 'text-sm opacity-75 text-white pl-1 w-full',
   input:
-    'px-4 py-2 rounded-lg bg-background text-white text-sm shadow-lg w-full outline-none focus:ring-2 focus:ring-primary',
+    'px-4 py-2 rounded-lg bg-background text-white shadow-lg w-full outline-none focus:ring-2 focus:ring-primary',
 };
 
 export function Register({ switchtoLogin }: RegisterProps) {
@@ -61,7 +61,7 @@ export function Register({ switchtoLogin }: RegisterProps) {
       data.email,
       data.password,
     );
-    setUser(response.cleanedUser);
+    setUser(response.user);
     setToken(response.token);
     setIsAuthenticated(true);
   };
@@ -158,8 +158,16 @@ export function Register({ switchtoLogin }: RegisterProps) {
           {isSubmitting ? 'Submit' : 'Processing'}
         </button>
       </form>
-      <span className={'h-2 w-full rounded-full bg-primary'}></span>
-      <button onClick={switchtoLogin}>Se connecter</button>
+      <span className={'h-[2px] w-full rounded-full bg-primary'}></span>
+      <div className={'flex items-center justify-center gap-2 text-sm'}>
+        <span>Déjà un compte ?</span>
+        <button
+          onClick={switchtoLogin}
+          className={'text-primary hover:underline'}
+        >
+          Se connecter
+        </button>
+      </div>
     </div>
   );
 }
