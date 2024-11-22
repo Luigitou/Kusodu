@@ -5,8 +5,11 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 import { registerService } from '@/services';
-import { toast } from 'react-toastify';
 import { useStore } from '@/store';
+
+type RegisterProps = {
+  switchtoLogin: () => void;
+};
 
 interface IRegisterFormInput {
   username: string;
@@ -36,9 +39,10 @@ const fieldClasses = {
     'px-4 py-2 rounded-lg bg-background text-white text-sm shadow-lg w-full outline-none focus:ring-2 focus:ring-primary',
 };
 
-export function Register() {
+export function Register({ switchtoLogin }: RegisterProps) {
   const setUser = useStore(state => state.setUser);
   const setToken = useStore(state => state.setToken);
+  const setIsAuthenticated = useStore(state => state.setIsAuthenticated);
 
   const {
     register,
@@ -52,18 +56,14 @@ export function Register() {
   });
 
   const onSubmit = async (data: IRegisterFormInput) => {
-    try {
-      const response = await registerService(
-        data.username,
-        data.email,
-        data.password,
-      );
-      setUser(response.cleanedUser);
-      setToken(response.token);
-    } catch (error) {
-      console.error('Register error:', error);
-      toast('Une erreur est survenue, veuillez réessayer plus tard');
-    }
+    const response = await registerService(
+      data.username,
+      data.email,
+      data.password,
+    );
+    setUser(response.cleanedUser);
+    setToken(response.token);
+    setIsAuthenticated(true);
   };
 
   const handleFocus = (fieldName: keyof IRegisterFormInput) => {
@@ -158,6 +158,8 @@ export function Register() {
           {isSubmitting ? 'Submit' : 'Processing'}
         </button>
       </form>
+      <span className={'h-2 w-full rounded-full bg-primary'}></span>
+      <button onClick={switchtoLogin}>Se connecter</button>
     </div>
   );
 }

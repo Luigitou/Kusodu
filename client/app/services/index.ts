@@ -1,2 +1,2 @@
 export { api, protectedApi } from './api';
-export { registerService } from './auth';
+export { registerService, loginService } from './auth';
