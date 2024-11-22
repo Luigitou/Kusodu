@@ -102,7 +102,7 @@ export function Register({ switchtoLogin }: RegisterProps) {
             </label>
             <input
               type='email'
-              id='email'
+              id={'email'}
               {...register('email')}
               placeholder='Email'
               className={classNames(
