@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { loginService } from '@/services';
 import { useStore } from '@/store';
+import classNames from 'classnames';
 
 type LoginProps = {
   switchToRegister: () => void;
@@ -74,7 +75,10 @@ export function Login({ switchToRegister }: LoginProps) {
             {...register('email')}
             placeholder={'Email'}
             onChange={() => handleFocus('email')}
-            className={fieldClasses.input}
+            className={classNames(
+              fieldClasses.input,
+              errors.email && 'ring-2 ring-red-400 focus:ring-primary',
+            )}
           />
         </div>
         <div className={fieldClasses.wrapper}>
@@ -87,7 +91,10 @@ export function Login({ switchToRegister }: LoginProps) {
             {...register('password')}
             placeholder={'Password'}
             onChange={() => handleFocus('password')}
-            className={fieldClasses.input}
+            className={classNames(
+              fieldClasses.input,
+              errors.password && 'ring-2 ring-red-400 focus:ring-primary',
+            )}
           />
         </div>
         <button
