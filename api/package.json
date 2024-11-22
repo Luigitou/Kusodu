@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "npx prisma generate && npx prisma db push && nest start --watch",
+    "start:dev": "npx prisma generate && npx prisma db push --accept-data-loss && nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "prisma:generate": "npx prisma generate",
@@ -83,7 +83,8 @@
     ],
     "moduleNameMapper": {
       "^@app/prisma(|/.*)$": "<rootDir>/libs/prisma/src/$1",
-      "^@app/jwt(|/.*)$": "<rootDir>/libs/jwt/src/$1"
+      "^@app/jwt(|/.*)$": "<rootDir>/libs/jwt/src/$1",
+      "^@app/grid-generator(|/.*)$": "<rootDir>/libs/grid-generator/src/$1"
     }
   }
 }

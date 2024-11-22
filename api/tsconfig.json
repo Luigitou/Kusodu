@@ -29,6 +29,12 @@
       ],
       "@app/jwt/*": [
         "libs/jwt/src/*"
+      ],
+      "@app/grid-generator": [
+        "libs/grid-generator/src"
+      ],
+      "@app/grid-generator/*": [
+        "libs/grid-generator/src/*"
       ]
     }
   }

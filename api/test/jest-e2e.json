@@ -14,6 +14,8 @@
     "@app/prisma/(.*)": "<rootDir>/../libs/prisma/src/$1",
     "@app/prisma": "<rootDir>/../libs/prisma/src",
     "@app/jwt/(.*)": "<rootDir>/../libs/jwt/src/$1",
-    "@app/jwt": "<rootDir>/../libs/jwt/src"
+    "@app/jwt": "<rootDir>/../libs/jwt/src",
+    "@app/grid-generator/(.*)": "<rootDir>/../libs/grid-generator/src/$1",
+    "@app/grid-generator": "<rootDir>/../libs/grid-generator/src"
   }
 }

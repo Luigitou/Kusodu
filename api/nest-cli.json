@@ -24,6 +24,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/jwt/tsconfig.lib.json"
       }
+    },
+    "grid-generator": {
+      "type": "library",
+      "root": "libs/grid-generator",
+      "entryFile": "index",
+      "sourceRoot": "libs/grid-generator/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/grid-generator/tsconfig.lib.json"
+      }
     }
   }
 }
