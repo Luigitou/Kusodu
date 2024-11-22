@@ -5,7 +5,11 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 import { registerService } from '@/services';
-import { toast } from 'react-toastify';
+import { useStore } from '@/store';
+
+type RegisterProps = {
+  switchtoLogin: () => void;
+};
 
 interface IRegisterFormInput {
   username: string;
@@ -29,13 +33,17 @@ const schema = yup.object().shape({
 
 const fieldClasses = {
   groups: 'mb-8 flex flex-col gap-8 lg:flex-row lg:gap-12',
-  wrapper: 'flex flex-col gap-3 w-full w-64 md:w-72',
-  label: 'text-sm opacity-75 text-white text-center w-full',
+  wrapper: 'flex flex-col gap-2 w-full w-64 md:w-72',
+  label: 'text-sm opacity-75 text-white pl-1 w-full',
   input:
-    'px-4 py-2 rounded-lg bg-background text-white text-sm shadow-lg w-full outline-none focus:ring-2 focus:ring-primary',
+    'px-4 py-2 rounded-lg bg-background text-white shadow-lg w-full outline-none focus:ring-2 focus:ring-primary',
 };
 
-export function Register() {
+export function Register({ switchtoLogin }: RegisterProps) {
+  const setUser = useStore(state => state.setUser);
+  const setToken = useStore(state => state.setToken);
+  const setIsAuthenticated = useStore(state => state.setIsAuthenticated);
+
   const {
     register,
     handleSubmit,
@@ -48,12 +56,14 @@ export function Register() {
   });
 
   const onSubmit = async (data: IRegisterFormInput) => {
-    try {
-      registerService(data.username, data.email, data.password);
-    } catch (error) {
-      console.error('Register error:', error);
-      toast('Une erreur est survenue, veuillez réessayer plus tard');
-    }
+    const response = await registerService(
+      data.username,
+      data.email,
+      data.password,
+    );
+    setUser(response.user);
+    setToken(response.token);
+    setIsAuthenticated(true);
   };
 
   const handleFocus = (fieldName: keyof IRegisterFormInput) => {
@@ -148,6 +158,16 @@ export function Register() {
           {isSubmitting ? 'Submit' : 'Processing'}
         </button>
       </form>
+      <span className={'h-[2px] w-full rounded-full bg-primary'}></span>
+      <div className={'flex items-center justify-center gap-2 text-sm'}>
+        <span>Déjà un compte ?</span>
+        <button
+          onClick={switchtoLogin}
+          className={'text-primary hover:underline'}
+        >
+          Se connecter
+        </button>
+      </div>
     </div>
   );
 }

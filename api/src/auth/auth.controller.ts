@@ -46,7 +46,9 @@ export class AuthController {
       email: createdUser.email,
     });
 
-    return { createdUser, token };
+    const cleanedUser = { ...createdUser, passwordHash: undefined };
+
+    return { user: cleanedUser, token };
   }
 
   @Post('login')
@@ -73,7 +75,9 @@ export class AuthController {
         email: user.email,
       });
 
-      return { user, token };
+      const cleanedUser = { ...user, passwordHash: undefined };
+
+      return { user: cleanedUser, token };
     }
   }
 }
