@@ -16,13 +16,13 @@
         "tsConfigPath": "libs/prisma/tsconfig.lib.json"
       }
     },
-    "jwt": {
+    "grid-generator": {
       "type": "library",
-      "root": "libs/jwt",
+      "root": "libs/grid-generator",
       "entryFile": "index",
-      "sourceRoot": "libs/jwt/src",
+      "sourceRoot": "libs/grid-generator/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/jwt/tsconfig.lib.json"
+        "tsConfigPath": "libs/grid-generator/tsconfig.lib.json"
       }
     }
   }
