@@ -32,8 +32,6 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/.env .env
 
-RUN npx prisma db push --accept-data-loss
-
 EXPOSE 5000
 
 CMD sh -c "until nc -z postgres 5432; do echo 'Waiting for PostgreSQL to be ready...'; sleep 2; done && echo 'PostgreSQL is ready!' && npm run prisma:deploy && node dist/main"
