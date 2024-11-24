@@ -8,10 +8,10 @@ export type GeneratedGrid = {
 };
 
 export enum Difficulty {
-  EASY = 30,
-  MEDIUM = 40,
-  HARD = 50,
-  INSANE = 60,
+  EASY = 40,
+  MEDIUM = 35,
+  HARD = 30,
+  INSANE = 25,
 }
 
 @Injectable()
@@ -103,7 +103,8 @@ export class GridGeneratorService {
   }
 
   private removeNumbers(grid: number[][], difficulty: Difficulty): void {
-    let attempts = difficulty;
+    let attempts = 81 - difficulty;
+
     while (attempts > 0) {
       const row = Math.floor(Math.random() * 9);
       const col = Math.floor(Math.random() * 9);
@@ -116,9 +117,10 @@ export class GridGeneratorService {
       let counter = 0;
       this.countSolutions(copyGrid, () => counter++);
 
-      if (counter !== 1) {
-        grid[row][col] = backup;
+      if (counter === 1) {
         attempts--;
+      } else {
+        grid[row][col] = backup;
       }
     }
   }
