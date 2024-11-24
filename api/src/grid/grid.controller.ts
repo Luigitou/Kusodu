@@ -3,6 +3,8 @@ import { Difficulty } from '@app/grid-generator';
 import { GetGridDto } from './dto/getGridDto';
 import { GridService } from './grid.service';
 import { AuthGuard } from '@nestjs/passport';
+import { CurrentUser } from '../auth/decorators/currentUser.decorator';
+import { User } from '@prisma/client';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('grid')
@@ -22,14 +24,11 @@ export class GridController {
     }
   }
 
-  @Get('')
-  async testUserDecorator() {
-    return 'test';
-  }
-
-  /*
   @Get(':difficulty/logged')
-  async loggedUserGetGrid(@Param() params: GetGridDto) {
+  async loggedUserGetGrid(
+    @Param() params: GetGridDto,
+    @CurrentUser() user: User,
+  ) {
     const getGridFromDb = await this.gridService.findUnusedGrid(
       Difficulty[params.difficulty],
       user,
@@ -41,5 +40,4 @@ export class GridController {
       return this.gridService.generateGrid(Difficulty[params.difficulty]);
     }
   }
-  */
 }
