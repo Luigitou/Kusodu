@@ -9,11 +9,12 @@ model Grid {
 }
 
 model UserGrid {
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String   @db.Uuid
-  grid       Grid     @relation(fields: [gridId], references: [id])
-  gridId     String   @db.Uuid
-  assignedAt DateTime @default(now())
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String    @db.Uuid
+  grid       Grid      @relation(fields: [gridId], references: [id])
+  gridId     String    @db.Uuid
+  finishedAt DateTime?
+  assignedAt DateTime  @default(now())
 
   @@id([userId, gridId])
 }
