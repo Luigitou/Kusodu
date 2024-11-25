@@ -7,5 +7,6 @@ model User {
   updatedAt    DateTime @updatedAt
 
   // Relations
-  UserGrid UserGrid[]
+  UserGrid     UserGrid[]
+  RefreshToken RefreshToken[]
 }
