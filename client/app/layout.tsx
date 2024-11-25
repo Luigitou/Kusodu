@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Header, Sidebar } from '@/ui';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
   title: 'Kusodu',
@@ -16,7 +17,18 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={'flex h-dvh w-dvw flex-col bg-dark text-white'}>
-        <ToastContainer />
+        <ToastContainer
+          position={'bottom-right'}
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick={true}
+          rtl={false}
+          pauseOnFocusLoss={true}
+          theme='dark'
+          draggable={false}
+          pauseOnHover={false}
+        />
         <header className={'m-4 mb-2'}>
           <Header />
         </header>

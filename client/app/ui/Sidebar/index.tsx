@@ -11,7 +11,7 @@ const buttons = [
   { label: 'Accueil', href: '/', icon: <Home09Icon /> },
   { label: 'Jouer', href: '/game', icon: <AiGameIcon /> },
   { label: 'Duel', href: '/duel', icon: <ZapIcon /> },
-  { label: 'Classé', href: '/:id', icon: <ChampionIcon /> },
+  { label: 'Classé', href: '/ranked', icon: <ChampionIcon /> },
 ];
 
 export function Sidebar({ isMobile, close }: SidebarProps) {

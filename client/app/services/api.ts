@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useStore } from '@/store';
+import { toast } from 'react-toastify';
 
 const token = useStore.getState().token;
 
@@ -10,29 +11,23 @@ export const api = axios.create({
   },
 });
 
-export const protectedApi = api;
-
-protectedApi.interceptors.request.use(
-  async config => {
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  error => {
-    Promise.reject(error);
-  },
-);
+api.interceptors.request.use(async config => {
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 api.interceptors.response.use(
   response => {
     return response;
   },
   error => {
-    console.log('Error', error);
+    toast(`${error.response.status} - ${error.response.data.message}`, {
+      type: 'error',
+    });
     if (error.response.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/auth';
+      return Promise.reject(error);
     }
     return Promise.reject(error);
   },
