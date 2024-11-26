@@ -8,6 +8,14 @@ export type RegisterDto = {
     testError: string;
   };
   token: string;
+  refreshToken: {
+    id: string;
+    token: string;
+    userId: string;
+    expiresAt: string;
+    revoked: boolean;
+    createdAt: string;
+  };
 };
 
 export type LoginDto = {
@@ -20,4 +28,24 @@ export type LoginDto = {
     testError: string;
   };
   token: string;
+  refreshToken: {
+    id: string;
+    token: string;
+    userId: string;
+    expiresAt: string;
+    revoked: boolean;
+    createdAt: string;
+  };
+};
+
+export type RefreshDto = {
+  token: string;
+  refreshToken: {
+    id: string;
+    token: string;
+    userId: string;
+    expiresAt: string;
+    revoked: boolean;
+    createdAt: string;
+  };
 };
