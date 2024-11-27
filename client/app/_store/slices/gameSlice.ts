@@ -10,10 +10,6 @@ export type Grid = {
   updatedAt: string;
 };
 
-export type GameData = {
-  timer: number;
-};
-
 export type GameState = {
   grid: Grid | null;
   setGrid: (grid: Grid) => void;
@@ -21,12 +17,18 @@ export type GameState = {
   setHost: (user: User) => void;
   joined: User | null;
   setJoined: (users: User) => void;
-  gameData: GameData | null;
-  setGameData: (gameData: GameData) => void;
-  updateTimer: (timer: number) => void;
+  timer: number | null;
+  timerIsPaused: boolean;
+  setTimerIsPaused: (timerIsPaused: boolean) => void;
+  setTimer: (timer: number) => void;
+  startTimer: () => void;
+  stopTimer: () => void;
+  lives: number | null;
+  setLives: (lives: number) => void;
+  setupGame: () => void;
 };
 
-export const createGameSlice: StateCreator<GameState> = set => ({
+export const createGameSlice: StateCreator<GameState> = (set, get) => ({
   grid: null,
   setGrid: (grid: Grid) => {
     set({ grid });
@@ -39,12 +41,37 @@ export const createGameSlice: StateCreator<GameState> = set => ({
   setJoined: (users: User) => {
     set({ joined: users });
   },
-  gameData: null,
-  setGameData: (gameData: GameData) => {
-    set({ gameData });
+  timer: null,
+  timerIsPaused: false,
+  setTimer: (timer: number) => {
+    set({ timer });
+  },
+  setTimerIsPaused: (timerIsPaused: boolean) => {
+    set({ timerIsPaused });
+  },
+  startTimer: () => {
+    let currentTimer = 0;
+    const interval = setInterval(() => {
+      if (!get().timerIsPaused) {
+        currentTimer++;
+        set({ timer: currentTimer });
+      }
+    }, 1000);
+
+    set(() => ({
+      stopTimer: () => clearInterval(interval),
+    }));
+  },
+  stopTimer: () => {},
+  lives: null,
+  setLives: (lives: number) => {
+    set({ lives });
   },
   // Game actions
-  updateTimer: (timer: number) => {
-    set({ gameData: { timer } });
+  setupGame: () => {
+    set({
+      timer: 0,
+      lives: 3,
+    });
   },
 });
