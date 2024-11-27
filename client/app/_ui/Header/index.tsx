@@ -1,9 +1,9 @@
 'use client';
 
-import { HeaderButtons } from '@/components';
-import { Menu01Icon, UserIcon } from '@/icons';
-import { Sidebar } from '@/ui';
+import { HeaderButtons } from '@/_components';
+import { Menu01Icon, UserIcon } from '@/_icons';
 import { useState } from 'react';
+import { Sidebar } from '@/_ui';
 
 export function Header() {
   const [openSidebar, setOpenSidebar] = useState(false);

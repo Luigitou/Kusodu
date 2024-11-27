@@ -1,4 +1,6 @@
-import { AvailableDifficulty } from '@/types';
+'use client';
+
+import { AvailableDifficulty } from '@/_types';
 import classNames from 'classnames';
 
 const difficultyOptions = [

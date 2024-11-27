@@ -1,7 +1,7 @@
 'use client';
 
-import { useStore } from '@/store';
-import { Login, Register, Settings } from '@/ui';
+import { useStore } from '@/_store';
+import { Login, Register, Settings } from '@/_ui';
 import { useState } from 'react';
 
 export default function Auth() {

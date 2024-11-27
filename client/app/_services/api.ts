@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { useStore } from '@/store';
+import { useStore } from '../_store';
 import { toast } from 'react-toastify';
-import { refreshService } from '@/services/auth';
+import { refreshService } from '@/_services/auth';
 
 export const api = axios.create({
   baseURL: 'http://localhost:5000',
@@ -84,7 +84,7 @@ api.interceptors.response.use(
         const newRefreshToken = refreshResponse.refreshToken;
         const newAccessToken = refreshResponse.token;
 
-        // Save the new tokens in the store
+        // Save the new tokens in the _store
         setRefreshToken(newRefreshToken);
         setToken(newAccessToken);
 

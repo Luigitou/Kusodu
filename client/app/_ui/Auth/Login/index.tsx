@@ -3,8 +3,8 @@
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { loginService } from '@/services';
-import { useStore } from '@/store';
+import { loginService } from '@/_services';
+import { useStore } from '@/_store';
 import classNames from 'classnames';
 
 type LoginProps = {

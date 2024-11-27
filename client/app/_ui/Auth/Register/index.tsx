@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import { registerService } from '@/services';
-import { useStore } from '@/store';
+import { registerService } from '@/_services';
+import { useStore } from '@/_store';
 
 type RegisterProps = {
   switchtoLogin: () => void;

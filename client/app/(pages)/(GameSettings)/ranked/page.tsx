@@ -1,5 +1,5 @@
-import { GameMenu } from '@/ui/GameMenu';
-import { GameMode } from '@/types';
+import { GameMenu } from '@/_ui/GameMenu';
+import { GameMode } from '@/_types';
 
 export default function Ranked() {
   return (

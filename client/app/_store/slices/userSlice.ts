@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand';
 
-type User = {
+export type User = {
   id: string;
   username: string;
   email: string;

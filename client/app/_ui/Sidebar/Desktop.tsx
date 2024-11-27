@@ -1,4 +1,4 @@
-import { NavButtons } from '@/components';
+import { NavButtons } from '@/_components';
 
 type DesktopSidebarProps = {
   buttons: Array<{ label: string; href: string; icon: React.ReactNode }>;

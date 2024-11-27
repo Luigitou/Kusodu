@@ -1,6 +1,6 @@
-import { NavButtons } from '@/components';
+import { NavButtons } from '@/_components';
 import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon';
-import { UserIcon } from '@/icons';
+import { UserIcon } from '@/_icons';
 
 type MobileSidebarProps = {
   buttons: Array<{ label: string; href: string; icon: React.ReactNode }>;

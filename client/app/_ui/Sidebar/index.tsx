@@ -1,6 +1,6 @@
-import { DesktopSidebar } from '@/ui/Sidebar/Desktop';
-import { MobileSidebar } from '@/ui/Sidebar/Mobile';
-import { AiGameIcon, ChampionIcon, Home09Icon, ZapIcon } from '@/icons';
+import { DesktopSidebar } from '@/_ui/Sidebar/Desktop';
+import { MobileSidebar } from '@/_ui/Sidebar/Mobile';
+import { AiGameIcon, ChampionIcon, Home09Icon, ZapIcon } from '@/_icons';
 
 type SidebarProps = {
   isMobile: boolean;

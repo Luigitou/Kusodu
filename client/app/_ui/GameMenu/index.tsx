@@ -1,10 +1,11 @@
 'use client';
 
-import { AvailableDifficulty, GameMode } from '@/types';
-import { Difficulty } from '@/ui/GameMenu/Difficulty';
+import { AvailableDifficulty, GameMode } from '../../_types';
+import { Difficulty } from '@/_ui/GameMenu/Difficulty';
 import { useState } from 'react';
-import { useStore } from '@/store';
-import { getGameGridLoggedService, getGameGridService } from '@/services/game';
+import { useStore } from '../../_store';
+import { getGameGridLoggedService, getGameGridService } from '@/_services/game';
+import { useRouter } from 'next/navigation';
 
 type GameMenuProps = {
   mode: GameMode;
@@ -15,6 +16,9 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
     AvailableDifficulty.MEDIUM,
   );
   const isAuthenticated = useStore(state => state.isAuthenticated);
+  const setGrid = useStore(state => state.setGrid);
+
+  const router = useRouter();
 
   const handleStartGame = async () => {
     let grid;
@@ -23,7 +27,8 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
     } else {
       grid = await getGameGridService(difficulty);
     }
-    console.log('grid', grid);
+    setGrid(grid);
+    router.push(`/lobby/${grid.id}`);
   };
 
   return (

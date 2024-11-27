@@ -1,5 +1,5 @@
-import { api } from '@/services';
-import { LoginDto, RefreshDto, RegisterDto } from '@/services/auth/dto';
+import { api } from '.';
+import { LoginDto, RefreshDto, RegisterDto } from '@/_services/auth/dto';
 
 export async function registerService(
   username: string,
