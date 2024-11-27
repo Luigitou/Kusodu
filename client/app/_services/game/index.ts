@@ -1,4 +1,4 @@
-import { api } from '.';
+import { api } from '@/_services';
 
 export async function getGameGridService(difficulty: string) {
   const response = await api.get(`/grid/${difficulty}`);

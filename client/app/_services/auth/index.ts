@@ -1,4 +1,4 @@
-import { api } from '.';
+import { api } from '@/_services';
 import { LoginDto, RefreshDto, RegisterDto } from '@/_services/auth/dto';
 
 export async function registerService(

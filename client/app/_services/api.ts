@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useStore } from '../_store';
+import { useStore } from '@/_store';
 import { toast } from 'react-toastify';
 import { refreshService } from '@/_services/auth';
 
