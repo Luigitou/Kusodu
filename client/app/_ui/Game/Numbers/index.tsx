@@ -6,7 +6,7 @@ export const Numbers = () => {
       {PossibleNumbers.map(number => (
         <button
           className={
-            'h-24 w-16 rounded-lg border-2 border-transparent bg-light text-center text-xl text-primary shadow-xl hover:border-primary'
+            'h-24 w-16 rounded-lg border-2 border-transparent bg-light text-center text-4xl text-primary shadow-xl hover:border-primary'
           }
           key={number}
         >

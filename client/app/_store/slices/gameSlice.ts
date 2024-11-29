@@ -25,7 +25,10 @@ export type GameState = {
   stopTimer: () => void;
   lives: number | null;
   setLives: (lives: number) => void;
+  selectedCell: { row: number; column: number } | null;
+  setSelectedCell: (selectedCell: { row: number; column: number }) => void;
   setupGame: () => void;
+  inputCell: (number: number) => void;
 };
 
 export const createGameSlice: StateCreator<GameState> = (set, get) => ({
@@ -67,11 +70,25 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
   setLives: (lives: number) => {
     set({ lives });
   },
+  selectedCell: null,
+  setSelectedCell: (selectedCell: { row: number; column: number }) => {
+    set({ selectedCell });
+  },
   // Game actions
   setupGame: () => {
     set({
       timer: 0,
       lives: 3,
     });
+  },
+  inputCell: (number: number) => {
+    const grid = get().grid;
+    const selectedCell = get().selectedCell;
+    if (!grid || !selectedCell) return;
+
+    const { row, column } = selectedCell;
+
+    grid.grid[row][column] = number;
+    set({ grid });
   },
 });
