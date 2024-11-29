@@ -27,6 +27,7 @@ export type GameState = {
   setLives: (lives: number) => void;
   selectedCell: { row: number; column: number } | null;
   setSelectedCell: (selectedCell: { row: number; column: number }) => void;
+  errorCells: { row: number; column: number; value: number }[];
   setupGame: () => void;
   inputCell: (number: number) => void;
 };
@@ -74,6 +75,7 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
   setSelectedCell: (selectedCell: { row: number; column: number }) => {
     set({ selectedCell });
   },
+  errorCells: [],
   // Game actions
   setupGame: () => {
     set({
@@ -88,7 +90,31 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
 
     const { row, column } = selectedCell;
 
-    grid.grid[row][column] = number;
+    if (grid.solution[row][column] === number) {
+      if (
+        get().errorCells.some(
+          cell => cell.row === row && cell.column === column,
+        )
+      ) {
+        set({
+          errorCells: get().errorCells.filter(
+            cell => cell.row !== row || cell.column !== column,
+          ),
+        });
+      }
+      grid.grid[row][column] = number;
+    } else {
+      if (
+        !get().errorCells.some(
+          cell => cell.row === row && cell.column === column,
+        )
+      ) {
+        set({
+          errorCells: [...get().errorCells, { row, column, value: number }],
+        });
+      }
+      set({ lives: get().lives! - 1 });
+    }
     set({ grid });
   },
 });
