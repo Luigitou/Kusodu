@@ -6,7 +6,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '../auth/decorators/currentUser.decorator';
 import { User } from '@prisma/client';
 
-@UseGuards(AuthGuard('jwt'))
 @Controller('grid')
 export class GridController {
   constructor(private readonly gridService: GridService) {}
@@ -24,6 +23,7 @@ export class GridController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':difficulty/logged')
   async loggedUserGetGrid(
     @Param() params: GetGridDto,

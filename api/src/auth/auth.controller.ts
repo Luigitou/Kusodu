@@ -9,6 +9,7 @@ import {
 import { RegisterDto } from './dto/registerDto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/loginDto';
+import { refreshTokenDto } from './dto/refreshTokenDto';
 
 @Controller('auth')
 export class AuthController {
@@ -46,9 +47,11 @@ export class AuthController {
       email: createdUser.email,
     });
 
+    const refreshToken = await this.authService.createRefreshToken(createdUser);
+
     const cleanedUser = { ...createdUser, passwordHash: undefined };
 
-    return { user: cleanedUser, token };
+    return { user: cleanedUser, token, refreshToken };
   }
 
   @Post('login')
@@ -75,9 +78,41 @@ export class AuthController {
         email: user.email,
       });
 
+      const refreshToken = await this.authService.createRefreshToken(user);
+
       const cleanedUser = { ...user, passwordHash: undefined };
 
-      return { user: cleanedUser, token };
+      return { user: cleanedUser, token, refreshToken };
     }
+  }
+
+  @Post('refresh')
+  async refresh(@Body() refreshDto: refreshTokenDto) {
+    const { refreshToken } = refreshDto;
+
+    const refreshTokenRecord =
+      await this.authService.validateRefreshToken(refreshToken);
+
+    const user = refreshTokenRecord.user;
+
+    const newAccessToken = await this.authService.createToken({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    });
+
+    await this.authService.revokeRefreshToken(refreshToken);
+    const newRefreshToken = await this.authService.createRefreshToken(user);
+
+    return { token: newAccessToken, refreshToken: newRefreshToken };
+  }
+
+  @Post('logout')
+  async logout(@Body() refreshDto: refreshTokenDto) {
+    const { refreshToken } = refreshDto;
+
+    await this.authService.revokeRefreshToken(refreshToken);
+
+    return { message: 'Successfully logged out' };
   }
 }
