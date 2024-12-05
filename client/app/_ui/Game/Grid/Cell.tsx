@@ -61,6 +61,8 @@ export const Cell = ({ row, column }: CellProps) => {
                 isSquareSelected(row, column)
               ? 'bg-primary/40'
               : '',
+        column === 8 && 'mr-0',
+        row === 8 && 'mb-0',
       )}
       onClick={handleClick}
     >

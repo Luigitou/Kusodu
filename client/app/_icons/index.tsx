@@ -198,3 +198,222 @@ export const Home09Icon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const PauseCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    color={'currentColor'}
+    fill={'none'}
+    {...props}
+  >
+    <circle cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='1.5' />
+    <path
+      d='M9.5 9L9.5 15M14.5 9V15'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
+
+export const PlayIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    color={'currentColor'}
+    fill={'none'}
+    {...props}
+  >
+    <path
+      d='M18.8906 12.846C18.5371 14.189 16.8667 15.138 13.5257 17.0361C10.296 18.8709 8.6812 19.7884 7.37983 19.4196C6.8418 19.2671 6.35159 18.9776 5.95624 18.5787C5 17.6139 5 15.7426 5 12C5 8.2574 5 6.3861 5.95624 5.42132C6.35159 5.02245 6.8418 4.73288 7.37983 4.58042C8.6812 4.21165 10.296 5.12907 13.5257 6.96393C16.8667 8.86197 18.5371 9.811 18.8906 11.154C19.0365 11.7084 19.0365 12.2916 18.8906 12.846Z'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
+
+export const HearthOutlineIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    {...props}
+  >
+    <defs>
+      <linearGradient id='outlineGradient' x1='0' y1='0' x2='0' y2='1'>
+        <stop offset='0%' stopColor='var(--tw-gradient-from)' />
+        <stop offset='100%' stopColor='var(--tw-gradient-to)' />
+      </linearGradient>
+    </defs>
+    <path
+      d='M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z'
+      stroke='url(#outlineGradient)'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      fill='none'
+    />
+  </svg>
+);
+
+export const HearthIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    {...props}
+  >
+    <defs>
+      <linearGradient id='fillGradient' x1='0' y1='0' x2='0' y2='1'>
+        <stop offset='0%' stopColor='var(--tw-gradient-from)' />
+        <stop offset='100%' stopColor='var(--tw-gradient-to)' />
+      </linearGradient>
+    </defs>
+    <path
+      d='M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z'
+      fill='url(#fillGradient)'
+    />
+  </svg>
+);
+
+export const ArrowTurnBackwardIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    color={'currentColor'}
+    fill={'none'}
+    {...props}
+  >
+    <path
+      d='M11 6H15.5C17.9853 6 20 8.01472 20 10.5C20 12.9853 17.9853 15 15.5 15H4'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M6.99998 12C6.99998 12 4.00001 14.2095 4 15C3.99999 15.7906 7 18 7 18'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
+
+export const EraserIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    color={'currentColor'}
+    fill={'none'}
+    {...props}
+  >
+    <path
+      d='M8.73792 7.78021L4.84693 11.7574C3.67722 12.953 3.09236 13.5508 3.01263 14.2802C2.99579 14.4343 2.99579 14.5899 3.01263 14.744C3.09236 15.4733 3.67722 16.0711 4.84693 17.2668L4.99601 17.4191C5.62049 18.0575 5.93274 18.3766 6.30638 18.5911C6.5236 18.7157 6.75482 18.8134 6.99505 18.882C7.40827 19 7.85149 19 8.73792 19C9.62436 19 10.0676 19 10.4808 18.882C10.721 18.8134 10.9522 18.7157 11.1695 18.5911C11.5431 18.3766 11.8554 18.0575 12.4798 17.4191L15.3239 14.5121M8.73792 7.78021L12.3199 4.12313C13.7065 2.70754 14.3997 1.99974 15.2627 2C16.1256 2.00026 16.8185 2.70846 18.2042 4.12487L18.9473 4.8845C20.3159 6.28342 21.0002 6.98288 21 7.85008C20.9997 8.71728 20.315 9.41633 18.9456 10.8144L15.3239 14.5121M8.73792 7.78021L15.3239 14.5121'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M10 22L21 22'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
+
+export const PencilEdit01Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    color={'currentColor'}
+    fill={'none'}
+    {...props}
+  >
+    <path
+      d='M15.2141 5.98239L16.6158 4.58063C17.39 3.80646 18.6452 3.80646 19.4194 4.58063C20.1935 5.3548 20.1935 6.60998 19.4194 7.38415L18.0176 8.78591M15.2141 5.98239L6.98023 14.2163C5.93493 15.2616 5.41226 15.7842 5.05637 16.4211C4.70047 17.058 4.3424 18.5619 4 20C5.43809 19.6576 6.94199 19.2995 7.57889 18.9436C8.21579 18.5877 8.73844 18.0651 9.78375 17.0198L18.0176 8.78591M15.2141 5.98239L18.0176 8.78591'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M11 20H17'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+    />
+  </svg>
+);
+
+export const Logout05Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    color={'currentColor'}
+    fill={'none'}
+    {...props}
+  >
+    <path
+      d='M6 6.50006C4.15875 8.14802 3 10.3345 3 13C3 17.9706 7.02944 22 12 22C16.9706 22 21 17.9706 21 13C21 10.3345 19.8412 8.14802 18 6.50006'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M12 2V11M12 2C11.2998 2 9.99153 3.9943 9.5 4.5M12 2C12.7002 2 14.0085 3.9943 14.5 4.5'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
+
+export const Copy01Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    color={'currentColor'}
+    fill={'none'}
+    {...props}
+  >
+    <path
+      d='M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
