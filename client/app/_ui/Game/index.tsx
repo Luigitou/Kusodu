@@ -6,6 +6,7 @@ import { GamePlayers } from '@/_ui/Game/GamePlayers';
 import { Numbers } from '@/_ui/Game/Numbers';
 import { useEffect } from 'react';
 import { useStore } from '@/_store';
+import { GameActions } from '@/_ui/Game/GameActions';
 
 export const Game = () => {
   const setupGame = useStore(state => state.setupGame);
@@ -24,6 +25,7 @@ export const Game = () => {
         <Grid />
         <div className={'flex grow flex-col gap-8'}>
           <GameData />
+          <GameActions />
           <GamePlayers />
         </div>
       </div>
