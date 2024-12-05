@@ -9,7 +9,7 @@ import {
 const classnames = {
   wrapper: 'flex gap-4 w-full',
   button:
-    'flex items-center gap-2 rounded-lg border-2 border-transparent bg-dark p-4 px-4 hover:border-primary w-1/2',
+    'flex items-center gap-2 rounded-lg border-2 border-transparent bg-dark p-4 px-4 hover:border-primary w-1/2 shadow-xl',
 };
 
 export function GameActions() {

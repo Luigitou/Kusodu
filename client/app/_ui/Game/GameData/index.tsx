@@ -33,7 +33,7 @@ export const GameData = () => {
     >
       <button
         className={
-          'flex w-full items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-dark p-2 px-4 hover:border-primary'
+          'flex w-full items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-dark p-2 px-4 shadow-xl hover:border-primary'
         }
         onClick={handlePause}
       >
@@ -42,14 +42,14 @@ export const GameData = () => {
       </button>
       <span
         className={
-          'flex w-full items-center justify-center rounded-lg bg-dark p-2 text-xl'
+          'flex w-full items-center justify-center rounded-lg bg-dark p-2 text-xl shadow-xl'
         }
       >
         {formatTime(timer)}
       </span>
       <div
         className={
-          'flex w-full items-center justify-center gap-2 rounded-lg bg-dark p-2'
+          'flex w-full items-center justify-center gap-2 rounded-lg bg-dark p-2 shadow-xl'
         }
       >
         {Array.from({ length: 3 }, (_, i) => (

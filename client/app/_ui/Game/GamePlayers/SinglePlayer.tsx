@@ -26,7 +26,7 @@ export function SinglePlayer() {
       <button
         onClick={handleCopyToClipboard}
         className={
-          'flex w-full items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-dark p-4 hover:border-primary'
+          'flex w-full items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-dark p-4 shadow-xl hover:border-primary'
         }
       >
         {copiedToClipboard ? (
