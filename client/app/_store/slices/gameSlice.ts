@@ -90,6 +90,8 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
 
     const { row, column } = selectedCell;
 
+    if (grid.grid[row][column] !== 0) return;
+
     if (grid.solution[row][column] === number) {
       if (
         get().errorCells.some(
@@ -111,6 +113,14 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       ) {
         set({
           errorCells: [...get().errorCells, { row, column, value: number }],
+        });
+      } else {
+        set({
+          errorCells: get().errorCells.map(cell =>
+            cell.row === row && cell.column === column
+              ? { ...cell, value: number }
+              : cell,
+          ),
         });
       }
       set({ lives: get().lives! - 1 });

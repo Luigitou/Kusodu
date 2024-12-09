@@ -10,16 +10,28 @@ import { GameActions } from '@/_ui/Game/GameActions';
 
 export const Game = () => {
   const setupGame = useStore(state => state.setupGame);
+  const inputCell = useStore(state => state.inputCell);
 
   useEffect(() => {
     setupGame();
   }, []);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const key = event.key;
+    console.log(key);
+
+    if (key >= '1' && key <= '9') {
+      inputCell(Number(key));
+    }
+  };
 
   return (
     <div
       className={
         'm-12 flex flex-col items-center justify-center gap-12 rounded-lg bg-dark p-12'
       }
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
     >
       <div className={'flex w-full gap-8'}>
         <Grid />
