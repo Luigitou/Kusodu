@@ -13,6 +13,7 @@ export const Cell = ({ row, column }: CellProps) => {
   const number = useStore(state => state.grid?.grid[row][column]);
   const setSelectedCell = useStore(state => state.setSelectedCell);
   const errorCells = useStore(state => state.errorCells);
+  const timerIsPaused = useStore(state => state.timerIsPaused);
 
   const isSelected = (row: number, column: number) => {
     if (!selectedCell) return false;
@@ -55,8 +56,8 @@ export const Cell = ({ row, column }: CellProps) => {
         row % 3 === 2 ? 'mb-2' : 'mb-1',
         isSelected(row, column)
           ? `bg-primary ${isErrorCell(row, column) && 'text-red-500'}`
-          : isErrorCell(row, column)
-            ? 'bg-red-300 text-red-500'
+          : isErrorCell(row, column) && !timerIsPaused
+            ? 'bg-red-500/40 text-red-500'
             : isColumnOrRowSelected(row, column) ||
                 isSquareSelected(row, column)
               ? 'bg-primary/40'
@@ -66,12 +67,15 @@ export const Cell = ({ row, column }: CellProps) => {
       )}
       onClick={handleClick}
     >
-      {number !== 0
-        ? number
-        : isErrorCell(row, column)
-          ? errorCells.find(cell => cell.row === row && cell.column === column)
-              ?.value
-          : ''}
+      {timerIsPaused
+        ? ''
+        : number !== 0
+          ? number
+          : isErrorCell(row, column)
+            ? errorCells.find(
+                cell => cell.row === row && cell.column === column,
+              )?.value
+            : ''}
     </span>
   );
 };
