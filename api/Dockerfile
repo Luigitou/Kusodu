@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
+RUN apk add --no-cache openssl netcat-openbsd
+
 RUN npm install
 
 COPY . .
@@ -14,6 +16,8 @@ FROM node:20-alpine AS development
 
 WORKDIR /app
 
+RUN apk add --no-cache openssl netcat-openbsd
+
 COPY --from=builder /app /app
 
 EXPOSE 5000
@@ -23,6 +27,8 @@ CMD ["npm", "run", "start:dev"]
 FROM node:20-alpine AS production
 
 WORKDIR /app
+
+RUN apk add --no-cache openssl netcat-openbsd
 
 RUN npm i -g @nestjs/cli && apk add --no-cache netcat-openbsd
 

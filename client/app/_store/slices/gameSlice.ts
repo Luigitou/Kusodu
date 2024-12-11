@@ -28,8 +28,13 @@ export type GameState = {
   selectedCell: { row: number; column: number } | null;
   setSelectedCell: (selectedCell: { row: number; column: number }) => void;
   errorCells: { row: number; column: number; value: number }[];
+  isNotesActive: boolean;
+  setIsNotesActive: (isNotesActive: boolean) => void;
+  notesCells: { row: number; column: number; numbers: number[] }[];
   setupGame: () => void;
   inputCell: (number: number) => void;
+  deleteCell: () => void;
+  inputNotes: (number: number) => void;
 };
 
 export const createGameSlice: StateCreator<GameState> = (set, get) => ({
@@ -76,6 +81,11 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
     set({ selectedCell });
   },
   errorCells: [],
+  notesCells: [],
+  isNotesActive: false,
+  setIsNotesActive: (isNotesActive: boolean) => {
+    set({ isNotesActive });
+  },
   // Game actions
   setupGame: () => {
     set({
@@ -89,6 +99,8 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
     if (!grid || !selectedCell) return;
 
     const { row, column } = selectedCell;
+
+    if (grid.grid[row][column] !== 0) return;
 
     if (grid.solution[row][column] === number) {
       if (
@@ -112,9 +124,89 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
         set({
           errorCells: [...get().errorCells, { row, column, value: number }],
         });
+      } else {
+        set({
+          errorCells: get().errorCells.map(cell =>
+            cell.row === row && cell.column === column
+              ? { ...cell, value: number }
+              : cell,
+          ),
+        });
       }
       set({ lives: get().lives! - 1 });
     }
     set({ grid });
+  },
+  deleteCell: () => {
+    const grid = get().grid;
+    const selectedCell = get().selectedCell;
+    if (!grid || !selectedCell) return;
+
+    const { row, column } = selectedCell;
+
+    if (grid.grid[row][column] !== 0) return;
+
+    const errorCells = get().errorCells;
+    const notesCells = get().notesCells;
+
+    const errorCellForThisCell = errorCells.find(
+      cell => cell.row === row && cell.column === column,
+    );
+
+    if (errorCellForThisCell) {
+      set({
+        errorCells: errorCells.filter(
+          cell => cell.row !== row || cell.column !== column,
+        ),
+      });
+    } else {
+      const notesCellForThisCell = notesCells.find(
+        cell => cell.row === row && cell.column === column,
+      );
+
+      if (notesCellForThisCell) {
+        set({
+          notesCells: notesCells.filter(
+            cell => cell.row !== row || cell.column !== column,
+          ),
+        });
+      } else {
+        set({
+          errorCells: errorCells.filter(
+            cell => cell.row !== row || cell.column !== column,
+          ),
+        });
+      }
+    }
+  },
+  inputNotes: (number: number) => {
+    const grid = get().grid;
+    const selectedCell = get().selectedCell;
+    if (!grid || !selectedCell) return;
+
+    const { row, column } = selectedCell;
+
+    if (grid.grid[row][column] !== 0) return;
+
+    const notesCells = get().notesCells;
+
+    const notesCellForThisCell = notesCells.find(
+      cell => cell.row === row && cell.column === column,
+    );
+
+    if (notesCellForThisCell) {
+      const { numbers } = notesCellForThisCell;
+
+      if (numbers.includes(number)) {
+        notesCellForThisCell.numbers = numbers.filter(n => n !== number);
+      } else {
+        notesCellForThisCell.numbers.push(number);
+      }
+      set({ notesCells: [...notesCells] });
+    } else {
+      set({
+        notesCells: [...notesCells, { row, column, numbers: [number] }],
+      });
+    }
   },
 });
