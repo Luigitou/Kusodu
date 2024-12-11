@@ -13,6 +13,7 @@ export const Cell = ({ row, column }: CellProps) => {
   const number = useStore(state => state.grid?.grid[row][column]);
   const setSelectedCell = useStore(state => state.setSelectedCell);
   const errorCells = useStore(state => state.errorCells);
+  const notesCells = useStore(state => state.notesCells);
   const timerIsPaused = useStore(state => state.timerIsPaused);
 
   const isSelected = (row: number, column: number) => {
@@ -48,6 +49,32 @@ export const Cell = ({ row, column }: CellProps) => {
     setSelectedCell({ row, column });
   };
 
+  const getCellDisplayValue = (row: number, column: number) => {
+    if (timerIsPaused) {
+      return '';
+    } else if (number !== 0) {
+      return number;
+    } else if (number === 0) {
+      const errorCell = errorCells.find(
+        cell => cell.row === row && cell.column === column,
+      );
+      if (errorCell) {
+        return errorCell.value;
+      } else {
+        const noteCell = notesCells.find(
+          cell => cell.row === row && cell.column === column,
+        );
+        if (noteCell) {
+          return 'n';
+        } else {
+          return '';
+        }
+      }
+    } else {
+      return '';
+    }
+  };
+
   return (
     <span
       className={classNames(
@@ -57,7 +84,7 @@ export const Cell = ({ row, column }: CellProps) => {
         isSelected(row, column)
           ? `bg-primary ${isErrorCell(row, column) && 'text-red-500'}`
           : isErrorCell(row, column) && !timerIsPaused
-            ? 'bg-red-500/40 text-red-500'
+            ? 'bg-red-500/30 text-red-500'
             : isColumnOrRowSelected(row, column) ||
                 isSquareSelected(row, column)
               ? 'bg-primary/40'
@@ -67,15 +94,7 @@ export const Cell = ({ row, column }: CellProps) => {
       )}
       onClick={handleClick}
     >
-      {timerIsPaused
-        ? ''
-        : number !== 0
-          ? number
-          : isErrorCell(row, column)
-            ? errorCells.find(
-                cell => cell.row === row && cell.column === column,
-              )?.value
-            : ''}
+      {getCellDisplayValue(row, column)}
     </span>
   );
 };

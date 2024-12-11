@@ -30,8 +30,11 @@ export type GameState = {
   errorCells: { row: number; column: number; value: number }[];
   isNotesActive: boolean;
   setIsNotesActive: (isNotesActive: boolean) => void;
+  notesCells: { row: number; column: number; numbers: number[] }[];
   setupGame: () => void;
   inputCell: (number: number) => void;
+  deleteCell: () => void;
+  inputNotes: (number: number) => void;
 };
 
 export const createGameSlice: StateCreator<GameState> = (set, get) => ({
@@ -78,6 +81,7 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
     set({ selectedCell });
   },
   errorCells: [],
+  notesCells: [],
   isNotesActive: false,
   setIsNotesActive: (isNotesActive: boolean) => {
     set({ isNotesActive });
@@ -132,5 +136,11 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       set({ lives: get().lives! - 1 });
     }
     set({ grid });
+  },
+  deleteCell: () => {
+    console.log('delete cell');
+  },
+  inputNotes: (number: number) => {
+    console.log('input note:', number);
   },
 });
