@@ -141,6 +141,33 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
     console.log('delete cell');
   },
   inputNotes: (number: number) => {
-    console.log('input note:', number);
+    const grid = get().grid;
+    const selectedCell = get().selectedCell;
+    if (!grid || !selectedCell) return;
+
+    const { row, column } = selectedCell;
+
+    if (grid.grid[row][column] !== 0) return;
+
+    const notesCells = get().notesCells;
+
+    const notesCellForThisCell = notesCells.find(
+      cell => cell.row === row && cell.column === column,
+    );
+
+    if (notesCellForThisCell) {
+      const { numbers } = notesCellForThisCell;
+
+      if (numbers.includes(number)) {
+        notesCellForThisCell.numbers = numbers.filter(n => n !== number);
+      } else {
+        notesCellForThisCell.numbers.push(number);
+      }
+      set({ notesCells: [...notesCells] });
+    } else {
+      set({
+        notesCells: [...notesCells, { row, column, numbers: [number] }],
+      });
+    }
   },
 });

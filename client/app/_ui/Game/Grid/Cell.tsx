@@ -65,7 +65,23 @@ export const Cell = ({ row, column }: CellProps) => {
           cell => cell.row === row && cell.column === column,
         );
         if (noteCell) {
-          return 'n';
+          const { numbers } = noteCell;
+
+          return (
+            <div className={'grid h-full w-full grid-cols-3 gap-1 text-xs'}>
+              {Array.from({ length: 9 }).map((_, number) => (
+                <span
+                  key={number + 1}
+                  className={classNames(
+                    'text-center',
+                    numbers.includes(number + 1) ? 'visible' : 'invisible',
+                  )}
+                >
+                  {number + 1}
+                </span>
+              ))}
+            </div>
+          );
         } else {
           return '';
         }
@@ -79,8 +95,8 @@ export const Cell = ({ row, column }: CellProps) => {
     <span
       className={classNames(
         'flex aspect-square w-14 cursor-pointer items-center justify-center bg-light text-2xl shadow-xl',
-        column % 3 === 2 ? 'mr-2' : 'mr-1',
-        row % 3 === 2 ? 'mb-2' : 'mb-1',
+        column === 8 ? '' : column % 3 === 2 ? 'mr-2' : 'mr-1',
+        row === 8 ? '' : row % 3 === 2 ? 'mb-2' : 'mb-1',
         isSelected(row, column)
           ? `bg-primary ${isErrorCell(row, column) && 'text-red-500'}`
           : isErrorCell(row, column) && !timerIsPaused
@@ -89,8 +105,6 @@ export const Cell = ({ row, column }: CellProps) => {
                 isSquareSelected(row, column)
               ? 'bg-primary/40'
               : '',
-        column === 8 && 'mr-0',
-        row === 8 && 'mb-0',
       )}
       onClick={handleClick}
     >
