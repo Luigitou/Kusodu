@@ -1,5 +1,5 @@
 import { useParams } from 'next/navigation';
-import { Copy01Icon } from '@/_icons';
+import { Copy01Icon, TickDouble01Icon } from '@/_icons';
 import { useState } from 'react';
 
 export function SinglePlayer() {
@@ -30,7 +30,10 @@ export function SinglePlayer() {
         }
       >
         {copiedToClipboard ? (
-          <>Code de la partie copié !</>
+          <>
+            <TickDouble01Icon />
+            Code de la partie copié !
+          </>
         ) : (
           <>
             <Copy01Icon />

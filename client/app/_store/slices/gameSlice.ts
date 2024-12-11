@@ -28,6 +28,8 @@ export type GameState = {
   selectedCell: { row: number; column: number } | null;
   setSelectedCell: (selectedCell: { row: number; column: number }) => void;
   errorCells: { row: number; column: number; value: number }[];
+  isNotesActive: boolean;
+  setIsNotesActive: (isNotesActive: boolean) => void;
   setupGame: () => void;
   inputCell: (number: number) => void;
 };
@@ -76,6 +78,10 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
     set({ selectedCell });
   },
   errorCells: [],
+  isNotesActive: false,
+  setIsNotesActive: (isNotesActive: boolean) => {
+    set({ isNotesActive });
+  },
   // Game actions
   setupGame: () => {
     set({
