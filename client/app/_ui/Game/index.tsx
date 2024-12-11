@@ -11,17 +11,22 @@ import { GameActions } from '@/_ui/Game/GameActions';
 export const Game = () => {
   const setupGame = useStore(state => state.setupGame);
   const inputCell = useStore(state => state.inputCell);
+  const inputNotes = useStore(state => state.inputNotes);
+  const isNotesActive = useStore(state => state.isNotesActive);
 
   useEffect(() => {
     setupGame();
-  }, []);
+  }, [setupGame]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const key = event.key;
-    console.log(key);
 
     if (key >= '1' && key <= '9') {
-      inputCell(Number(key));
+      if (isNotesActive) {
+        inputNotes(Number(key));
+      } else {
+        inputCell(Number(key));
+      }
     }
   };
 
