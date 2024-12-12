@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand';
 import { User } from '@/_store/slices/userSlice';
+import { getSocket } from '@/_services/socket';
 
 export type Grid = {
   id: string;
@@ -92,6 +93,8 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       timer: 0,
       lives: 3,
     });
+
+    const socket = getSocket();
   },
   inputCell: (number: number) => {
     const grid = get().grid;
