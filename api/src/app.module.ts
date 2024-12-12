@@ -4,6 +4,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from '@app/prisma';
 import { GridGeneratorModule } from '@app/grid-generator';
+import { GameModule } from './game/game.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { GridGeneratorModule } from '@app/grid-generator';
     GridModule,
     UserModule,
     AuthModule,
+    GameModule,
   ],
   controllers: [],
   providers: [],
