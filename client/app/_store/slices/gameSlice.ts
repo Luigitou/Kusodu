@@ -1,6 +1,7 @@
 import { StateCreator } from 'zustand';
 import { User } from '@/_store/slices/userSlice';
 import { getSocket } from '@/_services/socket';
+import { Socket } from 'socket.io-client';
 
 export type Grid = {
   id: string;
@@ -12,6 +13,7 @@ export type Grid = {
 };
 
 export type GameState = {
+  roomId: number | null;
   grid: Grid | null;
   setGrid: (grid: Grid) => void;
   host: User | null;
@@ -32,7 +34,8 @@ export type GameState = {
   isNotesActive: boolean;
   setIsNotesActive: (isNotesActive: boolean) => void;
   notesCells: { row: number; column: number; numbers: number[] }[];
-  setupGame: () => void;
+  socket: Socket | null;
+  setupGame: () => Promise<void>;
   inputCell: (number: number) => void;
   deleteCell: () => void;
   inputNotes: (number: number) => void;
@@ -87,14 +90,25 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
   setIsNotesActive: (isNotesActive: boolean) => {
     set({ isNotesActive });
   },
+  roomId: null,
+  socket: null,
   // Game actions
-  setupGame: () => {
-    set({
-      timer: 0,
-      lives: 3,
-    });
-
+  setupGame: async () => {
     const socket = getSocket();
+
+    return new Promise<void>(resolve => {
+      socket?.emit('createRoom', { state: get().grid });
+
+      socket!.on('roomCreated', data => {
+        set({
+          roomId: data.roomId,
+          socket,
+          timer: 0,
+          lives: 3,
+        });
+        resolve();
+      });
+    });
   },
   inputCell: (number: number) => {
     const grid = get().grid;

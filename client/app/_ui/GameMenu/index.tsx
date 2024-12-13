@@ -17,6 +17,8 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
   );
   const isAuthenticated = useStore(state => state.isAuthenticated);
   const setGrid = useStore(state => state.setGrid);
+  const setupGame = useStore(state => state.setupGame);
+  const roomId = useStore(state => state.roomId);
 
   const router = useRouter();
 
@@ -28,7 +30,8 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
       grid = await getGameGridService(difficulty);
     }
     setGrid(grid);
-    router.push(`/lobby/${grid.id}`);
+    await setupGame();
+    router.push(`/lobby/${roomId}`);
   };
 
   return (

@@ -4,19 +4,13 @@ import { Grid } from '@/_ui/Game/Grid';
 import { GameData } from '@/_ui/Game/GameData';
 import { GamePlayers } from '@/_ui/Game/GamePlayers';
 import { Numbers } from '@/_ui/Game/Numbers';
-import { useEffect } from 'react';
 import { useStore } from '@/_store';
 import { GameActions } from '@/_ui/Game/GameActions';
 
 export const Game = () => {
-  const setupGame = useStore(state => state.setupGame);
   const inputCell = useStore(state => state.inputCell);
   const inputNotes = useStore(state => state.inputNotes);
   const isNotesActive = useStore(state => state.isNotesActive);
-
-  useEffect(() => {
-    setupGame();
-  }, [setupGame]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const key = event.key;
