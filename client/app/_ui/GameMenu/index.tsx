@@ -30,8 +30,8 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
       grid = await getGameGridService(difficulty);
     }
     setGrid(grid);
-    await setupGame();
-    router.push(`/lobby/${roomId}`);
+    const room = await setupGame();
+    router.push(`/lobby/${room}`);
   };
 
   return (

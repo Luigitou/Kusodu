@@ -106,7 +106,7 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
           timer: 0,
           lives: 3,
         });
-        resolve();
+        resolve(data.roomId);
       });
     });
   },
