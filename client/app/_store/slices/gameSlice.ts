@@ -35,6 +35,8 @@ export type GameState = {
   setIsNotesActive: (isNotesActive: boolean) => void;
   notesCells: { row: number; column: number; numbers: number[] }[];
   socket: Socket | null;
+  players: unknown[];
+  setPlayers: (players: unknown[]) => void;
   setupGame: () => Promise<void>;
   inputCell: (number: number) => void;
   deleteCell: () => void;
@@ -92,6 +94,10 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
   },
   roomId: null,
   socket: null,
+  players: [],
+  setPlayers: (players: unknown[]) => {
+    set({ players });
+  },
   // Game actions
   setupGame: async () => {
     const socket = getSocket();
@@ -106,6 +112,7 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
           timer: 0,
           lives: 3,
         });
+        set({ players: data.players });
         resolve(data.roomId);
       });
     });
