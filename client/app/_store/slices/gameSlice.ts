@@ -126,7 +126,6 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       });
 
       socket?.on('authenticated', () => {
-        console.log('socket authenticated');
         socket?.emit('createRoom', {
           state: {
             grid: get().grid,
@@ -138,7 +137,6 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       });
 
       socket!.on('roomCreated', (data: EventReturnType) => {
-        console.log('event data:', data);
         set({
           roomId: data.roomId,
           socket,
@@ -194,6 +192,15 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       set({ lives: get().lives! - 1 });
     }
     set({ grid });
+    get().socket?.emit('inputCell', {
+      state: {
+        grid: get().grid,
+        timer: 0,
+        lives: 3,
+        errorCells: [],
+      },
+      roomId: get().roomId,
+    });
   },
   deleteCell: () => {
     const grid = get().grid;

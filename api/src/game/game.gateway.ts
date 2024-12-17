@@ -11,6 +11,7 @@ import { UsePipes, ValidationPipe } from '@nestjs/common';
 import { HandleStartGameDto } from './dto/handleStartGameDto';
 import { AuthenticateDto } from './dto/authenticateDto';
 import { JwtService } from '@nestjs/jwt';
+import { InputCellDto } from './dto/inputCellDto';
 
 interface Room {
   id: string;
@@ -109,5 +110,32 @@ export class GameGateway {
     });
 
     console.log(`Client joined room: ${roomId}`);
+  }
+
+  @SubscribeMessage('inputCell')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  handleInputCell(
+    @MessageBody() data: InputCellDto,
+    @ConnectedSocket() client: Socket,
+  ) {
+    if (!this.userConnections[client.id]) {
+      client.emit('unauthorized');
+      return;
+    }
+
+    const { roomId } = data;
+
+    if (!this.rooms[roomId]) {
+      client.emit('no room');
+      return;
+    }
+
+    this.rooms[roomId].state = data.state;
+
+    this.server.to(roomId).emit('inputCell', {
+      roomId,
+      state: data.state,
+      players: this.rooms[roomId].players,
+    });
   }
 }
