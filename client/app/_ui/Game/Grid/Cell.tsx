@@ -42,6 +42,7 @@ export const Cell = ({ row, column }: CellProps) => {
   };
 
   const isErrorCell = (row: number, column: number) => {
+    if (!errorCells) return false;
     return errorCells.some(cell => cell.row === row && cell.column === column);
   };
 
@@ -55,6 +56,7 @@ export const Cell = ({ row, column }: CellProps) => {
     } else if (number !== 0) {
       return number;
     } else if (number === 0) {
+      if (!errorCells) return '';
       const errorCell = errorCells.find(
         cell => cell.row === row && cell.column === column,
       );

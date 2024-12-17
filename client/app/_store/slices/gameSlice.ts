@@ -2,6 +2,7 @@ import { StateCreator } from 'zustand';
 import { User } from '@/_store/slices/userSlice';
 import { getSocket } from '@/_services/socket';
 import { Socket } from 'socket.io-client';
+import { useStore } from '@/_store';
 
 export type Grid = {
   id: string;
@@ -12,8 +13,23 @@ export type Grid = {
   updatedAt: string;
 };
 
+export type EventReturnType = {
+  roomId: string;
+  state: {
+    grid: Grid;
+    timer: number;
+    lives: number;
+    errorCells: {
+      row: number;
+      column: number;
+      value: number;
+    }[];
+  };
+  players: unknown[];
+};
+
 export type GameState = {
-  roomId: number | null;
+  roomId: string | null;
   grid: Grid | null;
   setGrid: (grid: Grid) => void;
   host: User | null;
@@ -37,7 +53,7 @@ export type GameState = {
   socket: Socket | null;
   players: unknown[];
   setPlayers: (players: unknown[]) => void;
-  setupGame: () => Promise<void>;
+  setupGame: () => Promise<EventReturnType>;
   inputCell: (number: number) => void;
   deleteCell: () => void;
   inputNotes: (number: number) => void;
@@ -102,18 +118,36 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
   setupGame: async () => {
     const socket = getSocket();
 
-    return new Promise<void>(resolve => {
-      socket?.emit('createRoom', { state: get().grid });
+    return new Promise<EventReturnType>(resolve => {
+      const token = useStore.getState().token;
 
-      socket!.on('roomCreated', data => {
+      socket?.emit('authenticate', {
+        token: token,
+      });
+
+      socket?.on('authenticated', () => {
+        console.log('socket authenticated');
+        socket?.emit('createRoom', {
+          state: {
+            grid: get().grid,
+            timer: 0,
+            lives: 3,
+            errorCells: [],
+          },
+        });
+      });
+
+      socket!.on('roomCreated', (data: EventReturnType) => {
+        console.log('event data:', data);
         set({
           roomId: data.roomId,
           socket,
-          timer: 0,
-          lives: 3,
+          timer: data.state.timer,
+          lives: data.state.lives,
+          errorCells: data.state.errorCells,
         });
         set({ players: data.players });
-        resolve(data.roomId);
+        resolve(data);
       });
     });
   },

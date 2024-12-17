@@ -7,6 +7,10 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { v4 as uuid } from 'uuid';
+import { UsePipes, ValidationPipe } from '@nestjs/common';
+import { HandleStartGameDto } from './dto/handleStartGameDto';
+import { AuthenticateDto } from './dto/authenticateDto';
+import { JwtService } from '@nestjs/jwt';
 
 interface Room {
   id: string;
@@ -33,6 +37,9 @@ export class GameGateway {
   server: Server;
 
   private rooms: { [roomId: string]: Room } = {};
+  private userConnections: { [clientId: string]: any } = {};
+
+  constructor(private jwtService: JwtService) {}
 
   handleConnection(client: Socket) {
     console.log(`Client connected: ${client.id}`);
@@ -42,17 +49,53 @@ export class GameGateway {
     console.log(`Client disconnected: ${client.id}`);
   }
 
-  @SubscribeMessage('createRoom')
-  handleStartGame(
-    @MessageBody() data: { state: object },
+  @SubscribeMessage('authenticate')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async handleAuthenticate(
+    @MessageBody() data: AuthenticateDto,
     @ConnectedSocket() client: Socket,
   ) {
+    const { token } = data;
+    if (!token) {
+      client.emit('unauthorized');
+      client.disconnect();
+      return;
+    }
+
+    try {
+      const payload = await this.jwtService.verify(token);
+      if (!payload) {
+        client.emit('unauthorized');
+        client.disconnect();
+        return;
+      }
+
+      client.data.user = payload;
+      client.emit('authenticated');
+      this.userConnections[client.id] = payload;
+    } catch (_error) {
+      client.emit('unauthorized');
+      client.disconnect(true);
+    }
+  }
+
+  @SubscribeMessage('createRoom')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  handleStartGame(
+    @MessageBody() data: HandleStartGameDto,
+    @ConnectedSocket() client: Socket,
+  ) {
+    if (!this.userConnections[client.id]) {
+      client.emit('unauthorized');
+      return;
+    }
+
     const roomId = uuid();
 
     if (!this.rooms[roomId]) {
       this.rooms[roomId] = {
         id: roomId,
-        players: [client.id],
+        players: [this.userConnections[client.id]],
         state: data.state,
       };
     }
