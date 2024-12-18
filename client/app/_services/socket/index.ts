@@ -9,7 +9,6 @@ export const getSocket = (): Socket | null => {
   const token = useStore.getState().token;
 
   if (!socket) {
-    console.log(token);
     socket = io(process.env.NEXT_PUBLIC_API_URL, {
       transports: ['websocket'],
     });

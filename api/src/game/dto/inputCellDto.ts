@@ -31,9 +31,6 @@ export class GameStateDto {
   grid: object;
 
   @IsNumber()
-  timer: number;
-
-  @IsNumber()
   lives: number;
 
   @IsArray()

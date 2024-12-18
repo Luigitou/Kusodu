@@ -195,9 +195,8 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
     get().socket?.emit('inputCell', {
       state: {
         grid: get().grid,
-        timer: 0,
-        lives: 3,
-        errorCells: [],
+        lives: get().lives,
+        errorCells: get().errorCells,
       },
       roomId: get().roomId,
     });
