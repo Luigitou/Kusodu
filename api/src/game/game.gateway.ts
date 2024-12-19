@@ -13,6 +13,7 @@ import { AuthenticateDto } from './dto/authenticateDto';
 import { JwtService } from '@nestjs/jwt';
 import { InputCellDto } from './dto/inputCellDto';
 import { JoinRoomDto } from './dto/JoinRoomDto';
+import { SyncGameStateDto } from './dto/SyncGameStateDto';
 
 interface Room {
   id: string;
@@ -158,11 +159,41 @@ export class GameGateway {
       return;
     }
 
-    this.rooms[roomId].players.push(this.userConnections[client.id]);
+    const user = this.userConnections[client.id];
+    if (!this.rooms[roomId].players.includes(user)) {
+      this.rooms[roomId].players.push(user);
+    }
+
+    client.join(roomId);
 
     this.server.to(roomId).emit('joinRoom', {
       roomId,
       state: this.rooms[roomId].state,
+      players: this.rooms[roomId].players,
+    });
+  }
+
+  @SubscribeMessage('syncGameState')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async syncGameState(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: SyncGameStateDto,
+  ) {
+    if (!this.userConnections[client.id]) {
+      client.emit('unauthorized');
+      return;
+    }
+
+    const { roomId } = data;
+
+    if (!this.rooms[roomId]) {
+      client.emit('no room');
+      return;
+    }
+
+    this.server.to(roomId).emit('syncGameState', {
+      roomId,
+      state: data.state,
       players: this.rooms[roomId].players,
     });
   }

@@ -6,6 +6,8 @@ import { GamePlayers } from '@/_ui/Game/GamePlayers';
 import { Numbers } from '@/_ui/Game/Numbers';
 import { useStore } from '@/_store';
 import { GameActions } from '@/_ui/Game/GameActions';
+import { getSocket } from '@/_services/socket';
+import { EventReturnType } from '@/_store/slices/gameSlice';
 
 export const Game = () => {
   const inputCell = useStore(state => state.inputCell);
@@ -23,6 +25,21 @@ export const Game = () => {
       }
     }
   };
+
+  // Listener for game state handling
+  const socket = getSocket();
+
+  socket?.on('inputCell', (data: EventReturnType) => {
+    useStore.getState().updateGameState(data);
+  });
+
+  socket?.on('joinRoom', () => {
+    useStore.getState().syncGameState();
+  });
+
+  socket?.on('syncGameState', (data: EventReturnType) => {
+    useStore.getState().updateGameState(data);
+  });
 
   return (
     <div
