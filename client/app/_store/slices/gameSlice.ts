@@ -1,5 +1,8 @@
 import { StateCreator } from 'zustand';
 import { User } from '@/_store/slices/userSlice';
+import { getSocket } from '@/_services/socket';
+import { Socket } from 'socket.io-client';
+import { useStore } from '@/_store';
 
 export type Grid = {
   id: string;
@@ -10,7 +13,23 @@ export type Grid = {
   updatedAt: string;
 };
 
+export type EventReturnType = {
+  roomId: string;
+  state: {
+    grid: Grid;
+    timer: number;
+    lives: number;
+    errorCells: {
+      row: number;
+      column: number;
+      value: number;
+    }[];
+  };
+  players: unknown[];
+};
+
 export type GameState = {
+  roomId: string | null;
   grid: Grid | null;
   setGrid: (grid: Grid) => void;
   host: User | null;
@@ -31,10 +50,16 @@ export type GameState = {
   isNotesActive: boolean;
   setIsNotesActive: (isNotesActive: boolean) => void;
   notesCells: { row: number; column: number; numbers: number[] }[];
-  setupGame: () => void;
+  socket: Socket | null;
+  players: unknown[];
+  setPlayers: (players: unknown[]) => void;
+  setupGame: () => Promise<EventReturnType>;
+  joinGame: (roomId: string) => Promise<EventReturnType> | undefined;
   inputCell: (number: number) => void;
   deleteCell: () => void;
   inputNotes: (number: number) => void;
+  updateGameState: (data: EventReturnType) => void;
+  syncGameState: () => void;
 };
 
 export const createGameSlice: StateCreator<GameState> = (set, get) => ({
@@ -86,11 +111,85 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
   setIsNotesActive: (isNotesActive: boolean) => {
     set({ isNotesActive });
   },
+  roomId: null,
+  socket: null,
+  players: [],
+  setPlayers: (players: unknown[]) => {
+    set({ players });
+  },
   // Game actions
-  setupGame: () => {
-    set({
-      timer: 0,
-      lives: 3,
+  setupGame: async () => {
+    const socket = getSocket();
+
+    return new Promise<EventReturnType>(resolve => {
+      const token = useStore.getState().token;
+
+      socket?.emit('authenticate', {
+        token: token,
+      });
+
+      socket?.on('authenticated', () => {
+        socket?.emit('createRoom', {
+          state: {
+            grid: get().grid,
+            timer: 0,
+            lives: 3,
+            errorCells: [],
+          },
+        });
+      });
+
+      socket!.on('roomCreated', (data: EventReturnType) => {
+        set({
+          roomId: data.roomId,
+          socket,
+          timer: data.state.timer,
+          lives: data.state.lives,
+          errorCells: data.state.errorCells,
+        });
+        set({ players: data.players });
+        resolve(data);
+      });
+    });
+  },
+  joinGame: (roomId: string) => {
+    const socket = getSocket();
+
+    if (!socket) return;
+
+    return new Promise((resolve, reject) => {
+      const token = useStore.getState().token;
+
+      socket.emit('authenticate', {
+        token: token,
+      });
+
+      socket.on('authenticated', () => {
+        socket?.emit('joinRoom', {
+          roomId: roomId,
+        });
+      });
+
+      socket.on('joinRoom', (data: EventReturnType) => {
+        set({
+          players: data.players,
+          roomId: data.roomId,
+          socket: socket,
+          grid: data.state.grid,
+          timer: data.state.timer,
+          lives: data.state.lives,
+          errorCells: data.state.errorCells,
+        });
+        resolve(data);
+      });
+
+      socket.on('unauthorized', () => {
+        reject('unauthorized');
+      });
+
+      socket.on('no room', () => {
+        reject('no room');
+      });
     });
   },
   inputCell: (number: number) => {
@@ -136,6 +235,14 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       set({ lives: get().lives! - 1 });
     }
     set({ grid });
+    get().socket?.emit('inputCell', {
+      state: {
+        grid: get().grid,
+        lives: get().lives,
+        errorCells: get().errorCells,
+      },
+      roomId: get().roomId,
+    });
   },
   deleteCell: () => {
     const grid = get().grid;
@@ -206,6 +313,31 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
     } else {
       set({
         notesCells: [...notesCells, { row, column, numbers: [number] }],
+      });
+    }
+  },
+  updateGameState: (data: EventReturnType) => {
+    set({
+      players: data.players,
+      roomId: data.roomId,
+      grid: data.state.grid,
+      timer: data.state.timer,
+      lives: data.state.lives,
+      errorCells: data.state.errorCells,
+    });
+  },
+  syncGameState: () => {
+    const socket = get().socket;
+
+    if (socket) {
+      socket.emit('syncGameState', {
+        roomId: get().roomId,
+        state: {
+          grid: get().grid,
+          timer: get().timer,
+          lives: get().lives,
+          errorCells: get().errorCells,
+        },
       });
     }
   },

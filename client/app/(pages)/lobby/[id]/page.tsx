@@ -13,7 +13,7 @@ export default function Lobby() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!grid || grid.id !== id) {
+    if (!grid || !id) {
       toast(`Aucune partie en cours avec id : ${id}`, {
         type: 'error',
       });

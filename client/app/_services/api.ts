@@ -21,7 +21,6 @@ api.interceptors.request.use(async config => {
 });
 
 // Automatically handle the refresh token
-
 let isRefreshing = false;
 let failedQueue: {
   resolve: (value?: unknown) => void;
