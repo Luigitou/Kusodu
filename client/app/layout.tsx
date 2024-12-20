@@ -3,6 +3,7 @@ import './globals.css';
 import { Header, Sidebar } from '@/_ui';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { InitState } from '@/_providers/InitState';
 
 export const metadata: Metadata = {
   title: 'Kusodu',
@@ -41,7 +42,7 @@ export default function RootLayout({
               'm-4 ml-2 mt-2 flex grow items-center justify-center rounded-xl bg-background p-4'
             }
           >
-            {children}
+            <InitState>{children}</InitState>
           </main>
         </div>
       </body>

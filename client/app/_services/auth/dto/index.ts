@@ -40,12 +40,11 @@ export type LoginDto = {
 
 export type RefreshDto = {
   token: string;
-  refreshToken: {
+  user: {
+    username: string;
+    email: string;
     id: string;
-    token: string;
-    userId: string;
-    expiresAt: string;
-    revoked: boolean;
     createdAt: string;
+    updatedAt: string;
   };
 };

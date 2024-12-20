@@ -44,17 +44,14 @@ api.interceptors.response.use(
   },
   async error => {
     if (error.response.status === 401) {
-      const { setToken, refreshToken, setRefreshToken, logout } =
-        useStore.getState();
+      const { setToken, logout } = useStore.getState();
 
       const originalRequest = error.config;
 
-      // If the request is a retry, don't intercept it
       if (originalRequest._retry) {
         return Promise.reject(error);
       }
 
-      // If a request is already requesting a refresh token, queue the request
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
@@ -71,21 +68,10 @@ api.interceptors.response.use(
       isRefreshing = true;
       originalRequest._retry = true;
 
-      // Request a new token with the refresh token
       try {
-        if (!refreshToken?.token) {
-          toast(`${error.response.status} - Refresh token not found`, {
-            type: 'error',
-          });
-          return Promise.reject(error);
-        }
-        const refreshResponse = await refreshService(refreshToken.token);
-
-        const newRefreshToken = refreshResponse.refreshToken;
+        const refreshResponse = await refreshService();
         const newAccessToken = refreshResponse.token;
 
-        // Save the new tokens in the _store
-        setRefreshToken(newRefreshToken);
         setToken(newAccessToken);
 
         processQueue(null, newAccessToken);

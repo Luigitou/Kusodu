@@ -1,5 +1,6 @@
 import { api } from '@/_services';
 import { LoginDto, RefreshDto, RegisterDto } from '@/_services/auth/dto';
+import { useStore } from '@/_store';
 
 export async function registerService(
   username: string,
@@ -22,9 +23,15 @@ export async function loginService(email: string, password: string) {
   return response.data;
 }
 
-export async function refreshService(refreshToken: string) {
-  const response = await api.post<RefreshDto>('/auth/refresh', {
-    refreshToken,
-  });
+export async function refreshService() {
+  const response = await api.post<RefreshDto>('/auth/refresh');
+
+  const user = useStore.getState().user;
+
+  if (!user) {
+    const setUser = useStore.getState().setUser;
+    setUser(response.data.user);
+  }
+
   return response.data;
 }
