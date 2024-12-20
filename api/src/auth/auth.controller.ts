@@ -5,11 +5,14 @@ import {
   ForbiddenException,
   InternalServerErrorException,
   Post,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { RegisterDto } from './dto/registerDto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/loginDto';
 import { refreshTokenDto } from './dto/refreshTokenDto';
+import { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -87,8 +90,12 @@ export class AuthController {
   }
 
   @Post('refresh')
-  async refresh(@Body() refreshDto: refreshTokenDto) {
-    const { refreshToken } = refreshDto;
+  async refresh(@Req() req: Request, @Res() res: Response) {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      throw new BadRequestException('Refresh token not found');
+    }
 
     const refreshTokenRecord =
       await this.authService.validateRefreshToken(refreshToken);
@@ -104,7 +111,14 @@ export class AuthController {
     await this.authService.revokeRefreshToken(refreshToken);
     const newRefreshToken = await this.authService.createRefreshToken(user);
 
-    return { token: newAccessToken, refreshToken: newRefreshToken };
+    res.cookie('refreshToken', newRefreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 1000 * 60 * 60 * 24,
+    });
+
+    return { token: newAccessToken };
   }
 
   @Post('logout')
