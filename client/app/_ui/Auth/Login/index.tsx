@@ -35,7 +35,6 @@ export function Login({ switchToRegister }: LoginProps) {
   const setUser = useStore(state => state.setUser);
   const setToken = useStore(state => state.setToken);
   const setIsAuthenticated = useStore(state => state.setIsAuthenticated);
-  const setRefreshToken = useStore(state => state.setRefreshToken);
 
   const {
     register,
@@ -53,7 +52,6 @@ export function Login({ switchToRegister }: LoginProps) {
     setUser(response.user);
     setToken(response.token);
     setIsAuthenticated(true);
-    setRefreshToken(response.refreshToken);
   };
 
   const handleFocus = (fieldName: keyof ILoginFormInput) => {
