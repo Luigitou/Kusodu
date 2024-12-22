@@ -29,6 +29,8 @@ export type EventReturnType = {
 };
 
 export type GameState = {
+  isMultiplayer: boolean;
+  setIsMultiplayer: (isMultiplayer: boolean) => void;
   roomId: string | null;
   grid: Grid | null;
   setGrid: (grid: Grid) => void;
@@ -110,6 +112,10 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
   isNotesActive: false,
   setIsNotesActive: (isNotesActive: boolean) => {
     set({ isNotesActive });
+  },
+  isMultiplayer: false,
+  setIsMultiplayer: (isMultiplayer: boolean) => {
+    set({ isMultiplayer });
   },
   roomId: null,
   socket: null,

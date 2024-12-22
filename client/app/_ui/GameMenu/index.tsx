@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useStore } from '../../_store';
 import { getGameGridLoggedService, getGameGridService } from '@/_services/game';
 import { useRouter } from 'next/navigation';
+import { IsMultiplayer } from '@/_ui/GameMenu/IsMultiplayer';
 
 type GameMenuProps = {
   mode: GameMode;
@@ -15,9 +16,11 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
   const [difficulty, setDifficulty] = useState<AvailableDifficulty>(
     AvailableDifficulty.MEDIUM,
   );
+  const [localIsMultiplayer, setLocalIsMultiplayer] = useState<boolean>(false);
   const isAuthenticated = useStore(state => state.isAuthenticated);
   const setGrid = useStore(state => state.setGrid);
   const setupGame = useStore(state => state.setupGame);
+  const setIsMultiplayer = useStore(state => state.setIsMultiplayer);
   const router = useRouter();
 
   const handleStartGame = async () => {
@@ -28,6 +31,7 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
       grid = await getGameGridService(difficulty);
     }
     setGrid(grid);
+    setIsMultiplayer(localIsMultiplayer);
     const room = await setupGame();
     router.push(`/lobby/${room.roomId}`);
   };
@@ -42,6 +46,12 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
       </span>
       <div className={'flex flex-col gap-8'}>
         <Difficulty difficulty={difficulty} setDifficulty={setDifficulty} />
+      </div>
+      <div className={'flex flex-col gap-8'}>
+        <IsMultiplayer
+          isMultiplayer={localIsMultiplayer}
+          setIsMultiplayer={setLocalIsMultiplayer}
+        />
       </div>
       <button
         className={
