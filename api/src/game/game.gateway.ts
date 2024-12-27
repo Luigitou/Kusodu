@@ -25,6 +25,7 @@ interface Room {
   cors: {
     origin: (origin, callback) => {
       const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
+      console.log('incoming origin:', origin);
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
