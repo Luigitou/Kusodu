@@ -35,3 +35,8 @@ export async function refreshService() {
 
   return response.data;
 }
+
+export async function logoutService() {
+  const response = await api.post('/auth/logout');
+  return response.data;
+}

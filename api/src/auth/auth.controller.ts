@@ -11,7 +11,6 @@ import {
 import { RegisterDto } from './dto/registerDto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/loginDto';
-import { refreshTokenDto } from './dto/refreshTokenDto';
 import { Request, Response } from 'express';
 
 @Controller('auth')
@@ -150,10 +149,21 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(@Body() refreshDto: refreshTokenDto) {
-    const { refreshToken } = refreshDto;
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      throw new BadRequestException('No refresh token found');
+    }
 
     await this.authService.revokeRefreshToken(refreshToken);
+
+    res.cookie('refreshToken', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      expires: new Date(0),
+    });
 
     return { message: 'Successfully logged out' };
   }

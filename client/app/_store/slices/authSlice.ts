@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand';
+import { logoutService } from '@/_services/auth';
 
 /*type RefreshToken = {
   id: string;
@@ -26,7 +27,8 @@ export const createAuthSlice: StateCreator<AuthState> = set => ({
   setIsAuthenticated: (isAuthenticated: boolean) => {
     set({ isAuthenticated });
   },
-  logout: () => {
+  logout: async () => {
     set({ token: null, isAuthenticated: false });
+    await logoutService();
   },
 });

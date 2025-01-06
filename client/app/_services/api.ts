@@ -81,16 +81,19 @@ api.interceptors.response.use(
       } catch (error) {
         processQueue(error, null);
         logout();
-        toast(`Session expired, please login again`, {
-          type: 'error',
-        });
       } finally {
         isRefreshing = false;
       }
     } else {
-      toast(`${error.response.status} - ${error.response.data.message}`, {
-        type: 'error',
-      });
+      if (
+        error.response.status !== 400 &&
+        error.response.data.message !== 'Refresh token not found'
+      ) {
+        toast(`${error.response.status} - ${error.response.data.message}`, {
+          type: 'error',
+        });
+      }
+
       return Promise.reject(error);
     }
   },
