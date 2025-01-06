@@ -40,6 +40,11 @@ export const IsMultiplayer = ({
           Non
         </button>
       </div>
+      {!isAuthenticated && (
+        <span className={'text-xs opacity-75'}>
+          Vous devez être connecté pour jouer en multijoueur
+        </span>
+      )}
     </div>
   );
 };

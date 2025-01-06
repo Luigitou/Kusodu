@@ -347,4 +347,5 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       });
     }
   },
+  quitGame: () => {},
 });
