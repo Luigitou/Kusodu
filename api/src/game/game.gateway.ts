@@ -160,6 +160,11 @@ export class GameGateway {
       return;
     }
 
+    if (!this.rooms[roomId].state.isMultiplayer) {
+      client.emit('private room');
+      return;
+    }
+
     const user = this.userConnections[client.id];
     if (!this.rooms[roomId].players.includes(user)) {
       this.rooms[roomId].players.push(user);

@@ -3,7 +3,6 @@
 import { useStore } from '@/_store';
 import { useEffect } from 'react';
 import { refreshService } from '@/_services/auth';
-import { toast } from 'react-toastify';
 
 export const InitState = ({ children }: { children: React.ReactNode }) => {
   const setToken = useStore(state => state.setToken);
@@ -22,9 +21,6 @@ export const InitState = ({ children }: { children: React.ReactNode }) => {
       } catch (error) {
         setToken(null);
         setIsAuthenticated(false);
-        toast(`La session a expiré, veuillez vous reconnecter`, {
-          type: 'info',
-        });
       }
     };
 

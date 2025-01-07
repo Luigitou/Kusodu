@@ -3,6 +3,7 @@ import { User } from '@/_store/slices/userSlice';
 import { getSocket } from '@/_services/socket';
 import { Socket } from 'socket.io-client';
 import { useStore } from '@/_store';
+import { toast } from 'react-toastify';
 
 export type Grid = {
   id: string;
@@ -19,6 +20,7 @@ export type EventReturnType = {
     grid: Grid;
     timer: number;
     lives: number;
+    isMultiplayer: boolean;
     errorCells: {
       row: number;
       column: number;
@@ -141,6 +143,7 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
             timer: 0,
             lives: 3,
             errorCells: [],
+            isMultiplayer: get().isMultiplayer,
           },
         });
       });
@@ -195,6 +198,13 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
 
       socket.on('no room', () => {
         reject('no room');
+      });
+
+      socket.on('private room', () => {
+        toast('Cette partie est privée.', {
+          type: 'info',
+        });
+        reject('Room not open');
       });
     });
   },
@@ -347,4 +357,5 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       });
     }
   },
+  quitGame: () => {},
 });
