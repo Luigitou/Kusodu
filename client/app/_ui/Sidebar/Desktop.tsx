@@ -1,7 +1,12 @@
 import { NavButtons } from '@/_components';
 
 type DesktopSidebarProps = {
-  buttons: Array<{ label: string; href: string; icon: React.ReactNode }>;
+  buttons: Array<{
+    label: string;
+    href: string;
+    icon: React.ReactNode;
+    active?: boolean;
+  }>;
 };
 
 export function DesktopSidebar({ buttons }: DesktopSidebarProps) {
@@ -17,6 +22,7 @@ export function DesktopSidebar({ buttons }: DesktopSidebarProps) {
           label={button.label}
           href={button.href}
           icon={button.icon}
+          active={button.active}
         />
       ))}
     </nav>

@@ -8,10 +8,10 @@ type SidebarProps = {
 };
 
 const buttons = [
-  { label: 'Accueil', href: '/', icon: <Home09Icon /> },
-  { label: 'Jouer', href: '/game', icon: <AiGameIcon /> },
-  { label: 'Duel', href: '/duel', icon: <ZapIcon /> },
-  { label: 'Classé', href: '/ranked', icon: <ChampionIcon /> },
+  { label: 'Accueil', href: '/', icon: <Home09Icon />, active: true },
+  { label: 'Jouer', href: '/game', icon: <AiGameIcon />, active: true },
+  { label: 'Duel', href: '/duel', icon: <ZapIcon />, active: false },
+  { label: 'Classé', href: '/ranked', icon: <ChampionIcon />, active: false },
 ];
 
 export function Sidebar({ isMobile, close }: SidebarProps) {
