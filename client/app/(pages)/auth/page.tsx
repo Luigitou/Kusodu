@@ -11,15 +11,15 @@ export default function Auth() {
   return (
     <div
       className={
-        'flex items-center justify-center gap-8 rounded-lg bg-dark p-12'
+        'flex w-full items-center justify-center gap-8 rounded-lg bg-dark p-12 md:w-fit'
       }
     >
       {isAuthenticated ? (
-        <div className={''}>
+        <div className={'w-full'}>
           <Settings />
         </div>
       ) : (
-        <div className={''}>
+        <div className={'w-full'}>
           {switchToRegister ? (
             <Register switchtoLogin={() => setSwitchToRegister(false)} />
           ) : (

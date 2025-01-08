@@ -6,7 +6,7 @@ import { FloppyDiskIcon, Logout03Icon } from '@/_icons';
 import { useRouter } from 'next/navigation';
 
 const classnames = {
-  wrapper: 'flex gap-4 w-full items-center justify-center',
+  wrapper: 'flex flex-col gap-4 w-full items-center justify-center md:flex-row',
   label: 'text-sm opacity-75 text-white pl-1 w-full',
   field:
     'px-4 py-2 rounded-lg bg-background text-white shadow-lg w-full outline-none focus:ring-2 focus:ring-primary',
@@ -20,6 +20,15 @@ export function Settings() {
   const handleLogout = () => {
     logout();
     router.push('/');
+  };
+
+  const formatDate = (date: string | undefined) => {
+    if (!date) return '';
+    return new Date(date).toLocaleDateString('fr-FR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
   };
 
   return (
@@ -42,14 +51,18 @@ export function Settings() {
         <label className={classNames(classnames.label)}>Membre depuis</label>
         <input
           className={classNames(classnames.field)}
-          value={user?.createdAt}
+          value={formatDate(user?.createdAt)}
         />
       </div>
       <span className={'h-[2px] w-full rounded-full bg-primary'}></span>
-      <div className={classNames('flex items-center justify-center gap-4')}>
+      <div
+        className={classNames(
+          'flex flex-col items-center justify-center gap-4 md:flex-row',
+        )}
+      >
         <button
           className={classNames(
-            'flex w-fit items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-light px-8 py-3 shadow-xl hover:border-primary',
+            'flex w-full items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-light px-8 py-3 shadow-xl hover:border-primary md:w-fit',
           )}
           onClick={handleLogout}
         >
@@ -58,7 +71,7 @@ export function Settings() {
         </button>
         <button
           className={classNames(
-            'flex w-fit items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-light px-8 py-3 shadow-xl hover:border-primary',
+            'flex w-full items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-light px-8 py-3 shadow-xl hover:border-primary md:w-fit',
           )}
         >
           <FloppyDiskIcon />
