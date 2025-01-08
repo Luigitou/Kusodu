@@ -16,7 +16,7 @@ export function MobileSidebar({ buttons, close }: MobileSidebarProps) {
   return (
     <div
       className={
-        'absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center bg-dark'
+        'absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-dark'
       }
     >
       <div
