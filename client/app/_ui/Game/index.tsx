@@ -44,14 +44,14 @@ export const Game = () => {
   return (
     <div
       className={
-        'm-12 flex flex-col items-center justify-center gap-12 rounded-lg bg-dark p-12'
+        'flex w-full flex-col items-center justify-center gap-2 rounded-lg bg-dark p-4 md:gap-12'
       }
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      <div className={'flex w-full gap-8'}>
+      <div className={'flex w-full flex-col gap-2 md:flex-row md:gap-8'}>
         <Grid />
-        <div className={'flex grow flex-col gap-8'}>
+        <div className={'flex grow flex-col gap-2 md:gap-8'}>
           <GameData />
           <GameActions />
           <GamePlayers />

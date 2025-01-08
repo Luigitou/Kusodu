@@ -8,7 +8,9 @@ export const GamePlayers = () => {
   console.log(players);
 
   return (
-    <div className={'flex flex-col gap-4 rounded-lg bg-light p-4 text-sm'}>
+    <div
+      className={'flex flex-col gap-4 rounded-lg bg-light p-2 text-sm md:p-4'}
+    >
       {players.length === 1 && <SinglePlayer />}
       {players.length > 1 && <Multiplayer />}
     </div>

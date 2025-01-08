@@ -9,9 +9,9 @@ import {
 import { useStore } from '@/_store';
 
 const classnames = {
-  wrapper: 'flex gap-4 w-full',
+  wrapper: 'flex gap-2 md:gap-4 md:w-full w-full',
   button:
-    'flex items-center gap-2 rounded-lg border-2 border-transparent bg-dark p-4 px-4 hover:border-primary w-1/2 shadow-xl',
+    'flex items-center gap-2 rounded-lg border-2 border-transparent bg-dark p-4 px-4 hover:border-primary grow md:w-1/2 shadow-xl',
 };
 
 export function GameActions() {
@@ -20,15 +20,19 @@ export function GameActions() {
   const setIsNotActive = useStore(state => state.setIsNotesActive);
 
   return (
-    <div className={'flex flex-col gap-4 rounded-lg bg-light p-4 text-sm'}>
+    <div
+      className={
+        'flex w-full flex-row gap-2 rounded-lg bg-light p-2 text-sm md:flex-col md:gap-4 md:p-4'
+      }
+    >
       <div className={classNames(classnames.wrapper)}>
         <button className={classNames(classnames.button)}>
           <ArrowTurnBackwardIcon />
-          Annuler
+          <span className={'hidden md:block'}>Annuler</span>
         </button>
         <button className={classNames(classnames.button)} onClick={deleteCell}>
           <EraserIcon />
-          Effacer
+          <span className={'hidden md:block'}>Effacer</span>
         </button>
       </div>
       <div className={classNames(classnames.wrapper)}>
@@ -41,7 +45,7 @@ export function GameActions() {
           onClick={() => setIsNotActive(!isNotesActive)}
         >
           <PencilEdit01Icon />
-          Notes
+          <span className={'hidden md:block'}>Notes</span>
           {isNotesActive && (
             <span
               className={
@@ -56,7 +60,7 @@ export function GameActions() {
           className={classNames(classnames.button, 'hover:border-red-500')}
         >
           <Logout05Icon />
-          Quitter
+          <span className={'hidden md:block'}>Quitter</span>
         </button>
       </div>
     </div>

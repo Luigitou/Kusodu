@@ -22,7 +22,7 @@ export default function Lobby() {
   }, [grid, router, id]);
 
   return (
-    <article>
+    <article className={'w-full'}>
       <Game />
     </article>
   );
