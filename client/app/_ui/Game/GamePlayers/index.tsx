@@ -5,8 +5,6 @@ import { useStore } from '@/_store';
 export const GamePlayers = () => {
   const players = useStore(state => state.players);
 
-  console.log(players);
-
   return (
     <div
       className={
