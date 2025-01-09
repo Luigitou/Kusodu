@@ -14,7 +14,8 @@ export const Lost = () => {
       >
         <h1 className={'text-5xl font-bold'}>Quel dommage !</h1>
         <p className={'text-xl'}>
-          Vous n'avez plus vie, mais vous pouvez réessayer une autre grille.
+          Vous n&apos;avez plus vie, mais vous pouvez réessayer une autre
+          grille.
         </p>
       </div>
       <Link
