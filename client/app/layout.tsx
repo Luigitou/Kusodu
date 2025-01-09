@@ -39,7 +39,7 @@ export default function RootLayout({
           </aside>
           <main
             className={
-              'flex w-full items-center justify-center rounded-xl bg-background p-4'
+              'flex w-full items-center justify-center rounded-xl bg-background p-2 md:p-4'
             }
           >
             <InitState>{children}</InitState>

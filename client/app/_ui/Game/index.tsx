@@ -42,22 +42,39 @@ export const Game = () => {
   });
 
   return (
-    <div
-      className={
-        'flex w-full flex-col items-center justify-center gap-2 rounded-lg bg-dark p-4 md:gap-12'
-      }
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-    >
-      <div className={'flex w-full flex-col gap-2 md:flex-row md:gap-8'}>
-        <Grid />
-        <div className={'flex grow flex-col gap-2 md:gap-8'}>
+    <>
+      <div
+        className={
+          'hidden w-full flex-col items-center justify-center gap-2 rounded-lg bg-dark p-4 md:flex md:w-fit md:gap-12'
+        }
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+      >
+        <div className={'flex w-fit flex-col gap-2 md:flex-row md:gap-8'}>
+          <Grid />
+          <div className={'flex grow flex-col gap-2 md:gap-8'}>
+            <GameData />
+            <GameActions />
+            <GamePlayers />
+          </div>
+        </div>
+        <Numbers />
+      </div>
+      <div
+        className={
+          'flex w-full flex-col items-center justify-center gap-2 rounded-lg bg-dark p-2 md:hidden md:gap-12'
+        }
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+      >
+        <div className={'flex w-full flex-col gap-4 md:flex-row md:gap-8'}>
           <GameData />
+          <Grid />
+          <Numbers />
           <GameActions />
           <GamePlayers />
         </div>
       </div>
-      <Numbers />
-    </div>
+    </>
   );
 };

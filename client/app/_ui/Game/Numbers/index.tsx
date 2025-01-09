@@ -25,7 +25,7 @@ export const Numbers = () => {
         <button
           onClick={() => handleClick(number)}
           className={
-            'grow rounded-lg border-2 border-transparent bg-light py-2 text-center text-xl text-primary shadow-xl hover:border-primary md:h-24 md:w-16 md:p-0 md:text-4xl'
+            'grow rounded-lg border-2 border-transparent bg-light py-2 text-center text-xl text-primary shadow-xl hover:border-primary md:h-24 md:w-16 md:grow-0 md:p-0 md:text-4xl'
           }
           key={number}
         >
