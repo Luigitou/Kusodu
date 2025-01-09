@@ -3,7 +3,12 @@ import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/interna
 import { UserIcon } from '@/_icons';
 
 type MobileSidebarProps = {
-  buttons: Array<{ label: string; href: string; icon: React.ReactNode }>;
+  buttons: Array<{
+    label: string;
+    href: string;
+    icon: React.ReactNode;
+    active?: boolean;
+  }>;
   close?: () => void;
 };
 
@@ -11,7 +16,7 @@ export function MobileSidebar({ buttons, close }: MobileSidebarProps) {
   return (
     <div
       className={
-        'absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center bg-dark'
+        'absolute left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-dark'
       }
     >
       <div
@@ -34,6 +39,7 @@ export function MobileSidebar({ buttons, close }: MobileSidebarProps) {
             label={button.label}
             href={button.href}
             icon={button.icon}
+            active={button.active}
             className={'justify-center'}
             click={close}
           />
@@ -43,6 +49,7 @@ export function MobileSidebar({ buttons, close }: MobileSidebarProps) {
           label={'Se connecter'}
           href={'/auth'}
           icon={<UserIcon />}
+          active={true}
           className={'justify-center'}
           click={close}
         />

@@ -96,7 +96,7 @@ export const Cell = ({ row, column }: CellProps) => {
   return (
     <span
       className={classNames(
-        'flex aspect-square w-14 cursor-pointer items-center justify-center bg-light text-2xl shadow-xl',
+        'flex aspect-square w-14 cursor-pointer items-center justify-center bg-light text-xl shadow-xl md:text-2xl',
         column === 8 ? '' : column % 3 === 2 ? 'mr-2' : 'mr-1',
         row === 8 ? '' : row % 3 === 2 ? 'mb-2' : 'mb-1',
         isSelected(row, column)

@@ -31,7 +31,7 @@ export const Difficulty = ({ difficulty, setDifficulty }: DifficultyProps) => {
   return (
     <div className={'flex w-full flex-col items-center justify-center gap-4'}>
       <span className={''}>Difficulté</span>
-      <div className={'flex gap-4'}>
+      <div className={'grid grid-cols-2 gap-4 md:flex md:gap-4'}>
         {difficultyOptions.map(option => (
           <button
             key={option.value}

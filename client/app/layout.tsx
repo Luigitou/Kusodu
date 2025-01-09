@@ -33,13 +33,13 @@ export default function RootLayout({
         <header className={'m-4 mb-2'}>
           <Header />
         </header>
-        <div className={'flex grow'}>
+        <div className={'flex w-full grow p-2'}>
           <aside className={'m-4 mr-2 mt-2 hidden md:block'}>
             <Sidebar isMobile={false} />
           </aside>
           <main
             className={
-              'm-4 ml-2 mt-2 flex grow items-center justify-center rounded-xl bg-background p-4'
+              'flex w-full items-center justify-center rounded-xl bg-background p-2 md:p-4'
             }
           >
             <InitState>{children}</InitState>

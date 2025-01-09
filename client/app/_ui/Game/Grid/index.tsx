@@ -2,7 +2,7 @@ import { Cell } from '@/_ui/Game/Grid/Cell';
 
 export const Grid = () => {
   return (
-    <div className='flex flex-col overflow-hidden rounded-lg shadow-xl'>
+    <div className='flex flex-col overflow-hidden rounded-lg shadow-xl sm:m-auto md:m-auto'>
       {Array.from({ length: 9 }, (_, rowIndex) => (
         <div className='flex' key={rowIndex}>
           {Array.from({ length: 9 }, (_, columnIndex) => (

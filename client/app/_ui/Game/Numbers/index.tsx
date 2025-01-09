@@ -16,12 +16,16 @@ export const Numbers = () => {
   };
 
   return (
-    <div className={'flex w-full flex-wrap items-center justify-center gap-3'}>
+    <div
+      className={
+        'flex w-full flex-wrap items-center justify-center gap-1 md:gap-3'
+      }
+    >
       {PossibleNumbers.map(number => (
         <button
           onClick={() => handleClick(number)}
           className={
-            'h-24 w-16 rounded-lg border-2 border-transparent bg-light text-center text-4xl text-primary shadow-xl hover:border-primary'
+            'grow rounded-lg border-2 border-transparent bg-light py-2 text-center text-xl text-primary shadow-xl hover:border-primary md:h-24 lg:w-16 lg:grow-0 lg:p-0 lg:text-4xl'
           }
           key={number}
         >

@@ -28,43 +28,42 @@ export const GameData = () => {
   return (
     <div
       className={
-        'flex flex-col items-center justify-center gap-4 rounded-lg bg-light p-4'
+        'flex w-full flex-row items-center justify-center gap-4 rounded-lg bg-light p-2 md:flex-col md:p-4'
       }
     >
       <button
         className={
-          'flex w-full items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-dark p-2 px-4 shadow-xl hover:border-primary'
+          'flex w-1/3 items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-dark p-2 px-4 shadow-xl hover:border-primary md:w-full'
         }
         onClick={handlePause}
       >
-        {timerIsPaused ? <PlayIcon /> : <PauseCircleIcon />}
-        <span className={'min-w-10'}>{timerIsPaused ? 'Jouer' : 'Pause'}</span>
+        <span className={''}>
+          {timerIsPaused ? <PlayIcon /> : <PauseCircleIcon />}
+        </span>
+        <span className={'hidden md:block'}>
+          {timerIsPaused ? 'Jouer' : 'Pause'}
+        </span>
       </button>
       <span
         className={
-          'flex w-full items-center justify-center rounded-lg bg-dark p-2 text-xl shadow-xl'
+          'flex w-1/3 items-center justify-center rounded-lg bg-dark p-2 text-xl shadow-xl md:w-full'
         }
       >
         {formatTime(timer)}
       </span>
       <div
         className={
-          'flex w-full items-center justify-center gap-2 rounded-lg bg-dark p-2 shadow-xl'
+          'flex w-1/3 items-center justify-center rounded-lg bg-dark p-2 shadow-xl md:w-full md:gap-2'
         }
       >
         {Array.from({ length: 3 }, (_, i) => (
-          <span
-            key={i}
-            className={
-              'bg-gradient-to-b from-primary to-light bg-clip-text text-transparent'
-            }
-          >
+          <span key={i} className={'text-primary'}>
             {i < lives! ? (
-              <span>
+              <span className={'w-fit'}>
                 <HearthIcon />
               </span>
             ) : (
-              <span>
+              <span className={'w-fit'}>
                 <HearthOutlineIcon />
               </span>
             )}

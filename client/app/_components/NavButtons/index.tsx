@@ -8,6 +8,7 @@ type NavButtonsProps = {
   label: string;
   href: string;
   icon: React.ReactNode;
+  active?: boolean;
   className?: string;
   click?: () => void;
 };
@@ -16,6 +17,7 @@ export function NavButtons({
   label,
   href,
   icon,
+  active,
   className,
   click,
 }: NavButtonsProps) {
@@ -29,6 +31,7 @@ export function NavButtons({
         'flex w-full items-center justify-start gap-3 rounded-lg border-2 border-black' +
           ' relative overflow-hidden border-transparent bg-light px-8 py-3 shadow-xl hover:border-primary',
         className,
+        !active && 'pointer-events-none opacity-50',
       )}
     >
       <span

@@ -44,10 +44,10 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
           Configuration de la partie
         </h2>
       </span>
-      <div className={'flex flex-col gap-8'}>
+      <div className={'w-full'}>
         <Difficulty difficulty={difficulty} setDifficulty={setDifficulty} />
       </div>
-      <div className={'flex flex-col gap-8'}>
+      <div className={'w-full'}>
         <IsMultiplayer
           isMultiplayer={localIsMultiplayer}
           setIsMultiplayer={setLocalIsMultiplayer}
