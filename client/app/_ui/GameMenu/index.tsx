@@ -2,7 +2,7 @@
 
 import { AvailableDifficulty, GameMode } from '../../_types';
 import { Difficulty } from '@/_ui/GameMenu/Difficulty';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from '../../_store';
 import { getGameGridLoggedService, getGameGridService } from '@/_services/game';
 import { useRouter } from 'next/navigation';
@@ -22,6 +22,7 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
   const setupGame = useStore(state => state.setupGame);
   const setIsMultiplayer = useStore(state => state.setIsMultiplayer);
   const router = useRouter();
+  const resetGame = useStore(state => state.resetGame);
 
   const handleStartGame = async () => {
     let grid;
@@ -35,6 +36,10 @@ export const GameMenu = ({ mode }: GameMenuProps) => {
     const room = await setupGame();
     router.push(`/lobby/${room.roomId}`);
   };
+
+  useEffect(() => {
+    resetGame();
+  }, [resetGame]);
 
   return (
     <div className={'flex w-full flex-col items-center gap-12'}>

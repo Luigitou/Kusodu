@@ -56,6 +56,7 @@ export type GameState = {
   notesCells: { row: number; column: number; numbers: number[] }[];
   socket: Socket | null;
   players: unknown[];
+  isGameOver: boolean | 'win' | 'lost';
   setPlayers: (players: unknown[]) => void;
   setupGame: () => Promise<EventReturnType>;
   joinGame: (roomId: string) => Promise<EventReturnType> | undefined;
@@ -64,6 +65,7 @@ export type GameState = {
   inputNotes: (number: number) => void;
   updateGameState: (data: EventReturnType) => void;
   syncGameState: () => void;
+  resetGame: () => void;
 };
 
 export const createGameSlice: StateCreator<GameState> = (set, get) => ({
@@ -122,6 +124,7 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
   roomId: null,
   socket: null,
   players: [],
+  isGameOver: false,
   setPlayers: (players: unknown[]) => {
     set({ players });
   },
@@ -230,6 +233,17 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
         });
       }
       grid.grid[row][column] = number;
+
+      const isGridComplete = grid.grid.every((gridRow, rowIndex) =>
+        gridRow.every(
+          (cellValue, colIndex) =>
+            cellValue !== 0 && cellValue === grid.solution[rowIndex][colIndex],
+        ),
+      );
+
+      if (isGridComplete) {
+        set({ isGameOver: 'win' });
+      }
     } else {
       if (
         !get().errorCells.some(
@@ -249,7 +263,11 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
         });
       }
       set({ lives: get().lives! - 1 });
+      if (get().lives! <= 0) {
+        set({ isGameOver: 'lost' });
+      }
     }
+
     set({ grid });
     get().socket?.emit('inputCell', {
       state: {
@@ -357,5 +375,23 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
       });
     }
   },
-  quitGame: () => {},
+  resetGame: () => {
+    set({
+      grid: null,
+      timer: null,
+      timerIsPaused: false,
+      lives: null,
+      errorCells: [],
+      notesCells: [],
+      isNotesActive: false,
+      isMultiplayer: false,
+      roomId: null,
+      socket: null,
+      players: [],
+      isGameOver: false,
+      selectedCell: null,
+      host: null,
+      joined: null,
+    });
+  },
 });
