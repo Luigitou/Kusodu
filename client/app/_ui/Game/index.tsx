@@ -45,7 +45,7 @@ export const Game = () => {
     <>
       <div
         className={
-          'hidden w-full flex-col items-center justify-center gap-2 rounded-lg bg-dark p-4 md:flex md:w-fit md:gap-12'
+          'hidden w-full flex-col items-center justify-center gap-2 rounded-lg bg-dark p-4 lg:flex lg:w-fit lg:gap-12'
         }
         tabIndex={0}
         onKeyDown={handleKeyDown}
@@ -62,12 +62,29 @@ export const Game = () => {
       </div>
       <div
         className={
-          'flex w-full flex-col items-center justify-center gap-2 rounded-lg bg-dark p-2 md:hidden md:gap-12'
+          'hidden w-full flex-col items-center justify-center gap-2 rounded-lg bg-dark p-2 md:flex md:gap-12 lg:hidden'
         }
         tabIndex={0}
         onKeyDown={handleKeyDown}
       >
-        <div className={'flex w-full flex-col gap-4 md:flex-row md:gap-8'}>
+        <div className={'flex w-full flex-col gap-4 md:gap-4'}>
+          <div className={'flex w-full gap-2'}>
+            <GameData />
+            <GameActions />
+            <GamePlayers />
+          </div>
+          <Grid />
+          <Numbers />
+        </div>
+      </div>
+      <div
+        className={
+          'flex w-full flex-col items-center justify-center gap-2 rounded-lg bg-dark p-2 md:hidden lg:gap-12'
+        }
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+      >
+        <div className={'flex w-full flex-col gap-4 lg:flex-row lg:gap-8'}>
           <GameData />
           <Grid />
           <Numbers />

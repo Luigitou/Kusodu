@@ -57,18 +57,13 @@ export const GameData = () => {
         }
       >
         {Array.from({ length: 3 }, (_, i) => (
-          <span
-            key={i}
-            className={
-              'bg-gradient-to-b from-primary to-light bg-clip-text text-transparent'
-            }
-          >
+          <span key={i} className={'text-primary'}>
             {i < lives! ? (
-              <span className={''}>
+              <span className={'w-fit'}>
                 <HearthIcon />
               </span>
             ) : (
-              <span className={''}>
+              <span className={'w-fit'}>
                 <HearthOutlineIcon />
               </span>
             )}

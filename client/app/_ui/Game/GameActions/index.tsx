@@ -9,9 +9,10 @@ import {
 import { useStore } from '@/_store';
 
 const classnames = {
-  wrapper: 'flex gap-2 md:gap-4 md:w-full w-full',
+  wrapper:
+    'flex gap-2 md:gap-4 h-full md:w-full w-full md:justify-center md:items-center',
   button:
-    'flex items-center gap-2 rounded-lg border-2 border-transparent bg-dark p-4 px-4 hover:border-primary grow md:w-1/2 shadow-xl',
+    'flex items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-dark p-4 px-4 hover:border-primary grow md:w-1/2 shadow-xl',
 };
 
 export function GameActions() {
