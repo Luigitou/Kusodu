@@ -40,4 +40,11 @@ export class GridController {
       return this.gridService.generateGrid(Difficulty[params.difficulty]);
     }
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('generate/baseGrids')
+  async generateBaseGrids() {
+    const grids = await this.gridService.generateBaseGrids();
+    return grids;
+  }
 }

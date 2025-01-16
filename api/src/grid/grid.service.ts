@@ -69,4 +69,45 @@ export class GridService {
       return grids[randomIndex];
     }
   }
+
+  async generateBaseGrids() {
+    const difficulties = [
+      Difficulty.EASY,
+      Difficulty.MEDIUM,
+      Difficulty.HARD,
+    ];
+    const gridsPerDifficulty = 100;
+
+    for (const difficulty of difficulties) {
+      const generatedGrids: GeneratedGrid[] = [];
+
+      for (let i = 0; i < gridsPerDifficulty; i++) {
+        try {
+          const grid = await this.generateGrid(difficulty);
+          generatedGrids.push(<GeneratedGrid>grid);
+          console.log(`Generated grid ${i + 1} for difficulty ${difficulty}`);
+        } catch (error) {
+          console.error(`Failed to generate grid: ${error}`);
+        }
+      }
+
+      try {
+        await this.saveGridsBatchInDb(generatedGrids);
+        console.log(`Successfully saved ${gridsPerDifficulty} grids for difficulty ${difficulty}`);
+      } catch (error) {
+        console.error(`Error saving grids for difficulty ${difficulty}: ${error}`);
+      }
+    }
+  }
+
+  private async saveGridsBatchInDb(grids: GeneratedGrid[]): Promise<void> {
+    await this.prismaService.grid.createMany({
+      data: grids.map((grid) => ({
+        grid: grid.grid,
+        solution: grid.solution,
+        difficulty: grid.difficulty,
+      })),
+      skipDuplicates: true,
+    });
+  }
 }

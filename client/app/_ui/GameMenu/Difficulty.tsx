@@ -40,7 +40,10 @@ export const Difficulty = ({ difficulty, setDifficulty }: DifficultyProps) => {
               'relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-transparent bg-light px-8 py-3 shadow-xl hover:border-primary',
               difficulty === option.value &&
                 'text-primary ring-4 ring-primary hover:border-transparent',
+                option.value === AvailableDifficulty.INSANE &&
+                  'cursor-not-allowed border-transparent text-gray-500 hover:border-transparent',
             )}
+            disabled={option.value === AvailableDifficulty.INSANE}
           >
             {option.label}
           </button>
