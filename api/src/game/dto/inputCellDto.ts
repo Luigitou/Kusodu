@@ -9,7 +9,7 @@ import { Type } from 'class-transformer';
 
 export class InputCellDto {
   @IsObject()
-  state: object;
+  state: any;
 
   @IsString()
   roomId: string;

@@ -1,9 +1,15 @@
-import { IsArray, IsNumber, IsObject, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsNumber,
+  IsObject,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class HandleStartGameDto {
   @IsObject()
-  state: object;
+  state: any;
 }
 
 class ErrorCellDto {
@@ -31,4 +37,7 @@ export class GameStateDto {
   @ValidateNested({ each: true })
   @Type(() => ErrorCellDto)
   errorCells: ErrorCellDto[];
+
+  @IsBoolean()
+  isMultiplayer: boolean;
 }

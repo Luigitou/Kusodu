@@ -133,13 +133,25 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
     const socket = getSocket();
 
     return new Promise<EventReturnType>(resolve => {
-      const token = useStore.getState().token;
+      if (get().isMultiplayer) {
+        const token = useStore.getState().token;
 
-      socket?.emit('authenticate', {
-        token: token,
-      });
+        socket?.emit('authenticate', {
+          token: token,
+        });
 
-      socket?.on('authenticated', () => {
+        socket?.on('authenticated', () => {
+          socket?.emit('createRoom', {
+            state: {
+              grid: get().grid,
+              timer: 0,
+              lives: 3,
+              errorCells: [],
+              isMultiplayer: get().isMultiplayer,
+            },
+          });
+        });
+      } else {
         socket?.emit('createRoom', {
           state: {
             grid: get().grid,
@@ -149,7 +161,7 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
             isMultiplayer: get().isMultiplayer,
           },
         });
-      });
+      }
 
       socket!.on('roomCreated', (data: EventReturnType) => {
         set({
@@ -162,6 +174,7 @@ export const createGameSlice: StateCreator<GameState> = (set, get) => ({
         set({ players: data.players });
         resolve(data);
       });
+
     });
   },
   joinGame: (roomId: string) => {

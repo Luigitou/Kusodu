@@ -89,7 +89,8 @@ export class GameGateway {
     @MessageBody() data: HandleStartGameDto,
     @ConnectedSocket() client: Socket,
   ) {
-    if (!this.userConnections[client.id]) {
+    if (data.state.isMultiplayer && !this.userConnections[client.id]) {
+      console.log(!data.state.isMultiplayer);
       client.emit('unauthorized');
       return;
     }
@@ -121,7 +122,7 @@ export class GameGateway {
     @MessageBody() data: InputCellDto,
     @ConnectedSocket() client: Socket,
   ) {
-    if (!this.userConnections[client.id]) {
+    if (data.state.isMultiplayer && !this.userConnections[client.id]) {
       client.emit('unauthorized');
       return;
     }
@@ -185,7 +186,7 @@ export class GameGateway {
     @ConnectedSocket() client: Socket,
     @MessageBody() data: SyncGameStateDto,
   ) {
-    if (!this.userConnections[client.id]) {
+    if (data.state.isMultiplayer && !this.userConnections[client.id]) {
       client.emit('unauthorized');
       return;
     }
