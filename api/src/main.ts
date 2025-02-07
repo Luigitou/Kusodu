@@ -6,21 +6,22 @@ import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
-
   app.use(cookieParser());
 
   app.enableCors({
     origin: (origin, callback) => {
+      const allowedOriginRegex = new RegExp(
+        '^(?:https://(?:www.)?kusodu.com|http://localhost(?::d+)?)$',
+      );
+
       console.log(
         'origin',
         origin,
-        'allowedOrigins',
-        allowedOrigins,
-        'includes',
-        allowedOrigins.includes(origin),
+        'allowed by regex',
+        allowedOriginRegex.test(origin),
       );
-      if (!origin || allowedOrigins.includes(origin)) {
+
+      if (!origin || allowedOriginRegex.test(origin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
