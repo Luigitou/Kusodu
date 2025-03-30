@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:18-alpine
+FROM node:23-alpine AS development
 
 # Install pnpm globally
 RUN npm install -g pnpm
@@ -17,7 +17,7 @@ RUN pnpm install
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE ${API_PORT}
 
 # Start the application in development mode
-CMD ["pnpm", "run", "start"]
+CMD ["pnpm", "run", "start:dev"]
