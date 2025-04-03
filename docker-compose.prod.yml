@@ -1,0 +1,61 @@
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: development
+    container_name: api-kusodu
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    environment:
+      - NODE_ENV=production
+      - PORT=${API_PORT}
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - kusodu
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client-kusodu
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    environment:
+      - NODE_ENV=development
+      - VITE_PORT=${CLIENT_PORT}
+      - VITE_API_URL=${API_URL}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - kusodu
+
+  postgres:
+    image: postgres:17.4-bullseye
+    container_name: db-kusodu
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kusodu
+
+networks:
+  kusodu:
+    driver: bridge
+
+volumes:
+  db-data:
