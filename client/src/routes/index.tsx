@@ -13,10 +13,12 @@ function Home() {
             console.log(r);
         })
     }, []);
-    
+
     return (
         <div className="p-2">
             <h3>Welcome Home!!!</h3>
+            <span>process: ${process.env.VITE_API_URL}</span>
+            <span>meta: ${import.meta.env.VITE_API_URL}</span>
         </div>
     )
 }

@@ -21,13 +21,15 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+      target: production
+      args:
+        - VITE_API_URL=${API_URL}
+        - VITE_PORT=${CLIENT_PORT}
     container_name: client-kusodu
     ports:
       - "${CLIENT_PORT}:${CLIENT_PORT}"
     environment:
-      - NODE_ENV=development
-      - VITE_PORT=${CLIENT_PORT}
-      - VITE_API_URL=${API_URL}
+      - NODE_ENV=production
     depends_on:
       postgres:
         condition: service_healthy
