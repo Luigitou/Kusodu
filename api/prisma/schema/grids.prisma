@@ -1,0 +1,7 @@
+model Grid {
+  id         BigInt @id @default(autoincrement())
+  puzzle     String @db.Text
+  solution   String @db.Text
+  clues      Int
+  difficulty Float
+}

@@ -1,3 +1,6 @@
+# Dataset
+dataset
+
 # Docker volumes
 db
 
@@ -92,7 +95,6 @@ yarn.lock
 .vinxi
 
 /build/
-/api/
 /server/build
 /public/build
 .vinxi

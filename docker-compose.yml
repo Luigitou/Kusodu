@@ -24,6 +24,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+      target: development
     container_name: client-kusodu
     ports:
       - "${CLIENT_PORT}:${CLIENT_PORT}"
